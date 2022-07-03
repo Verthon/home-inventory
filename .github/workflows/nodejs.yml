@@ -1,4 +1,4 @@
-name: Create React App lint build and tests
+name: Build
 
 on:
   push:
