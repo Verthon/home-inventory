@@ -4,13 +4,18 @@ import { App } from './App';
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
+import { Router } from './router/Router';
+import { RouterProvider } from './router/RouterProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider>
+      <Router />
+      <App />
+    </RouterProvider>
   </React.StrictMode>
 );
 
