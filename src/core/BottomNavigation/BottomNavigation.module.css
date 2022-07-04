@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  height: 56px;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+}
+
+.button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  outline: currentcolor none 0px;
+  border: 0px none;
+  margin: 0px;
+  border-radius: 0px;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    padding-top 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  padding: 0px 12px;
+  min-width: 80px;
+  max-width: 168px;
+  color: rgba(0, 0, 0, 0.6);
+  flex-direction: column;
+  flex: 1 1 0%;
+}
