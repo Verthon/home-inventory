@@ -8,17 +8,17 @@ import styles from './BottomNavigation.module.css'
 
 export const BottomNavigation = () => {
   return <div className={styles.wrapper}>
-    <Link className={styles.link} to="/"><button className={styles.button}>
+    <Link className={styles.link} to="/">
       <HomeIcon />
       <span>Home</span>
-    </button></Link>
-    <Link className={styles.link} to="/create"><button className={styles.button}>
+    </Link>
+    <Link className={styles.link} to="/create">
       <CreateIcon />
       <span>Create</span>
-    </button></Link>
-    <Link className={styles.link} to="/list"><button className={styles.button}>
+    </Link>
+    <Link className={styles.link} to="/list">
       <ListIcon />
       <span>List</span>
-    </button></Link>
+    </Link>
   </div>
 }

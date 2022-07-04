@@ -20,9 +20,9 @@ describe('BottomNavigation', () => {
   it('should have 3 default routes (home, create, list)', () => {
     createWrapper()
 
-    const homeButton = screen.getByRole('button', { name: /home/i })
-    const createButton = screen.getByRole('button', { name: /create/i })
-    const listButton = screen.getByRole('button', { name: /list/i })
+    const homeButton = screen.getAllByRole('link', { name: /home/i })[0]
+    const createButton = screen.getAllByRole('link', { name: /create/i })[0]
+    const listButton = screen.getAllByRole('link', { name: /list/i })[0]
 
     const buttons = [homeButton, createButton, listButton]
 
@@ -33,7 +33,7 @@ describe('BottomNavigation', () => {
 
   it('should have change the location based on which button was clicked', () => {
     createWrapper()
-    const createButton = screen.getByRole('button', { name: /create/i })
+    const createButton = screen.getAllByRole('link', { name: /create/i })[0]
 
     userEvent.click(createButton)
 
