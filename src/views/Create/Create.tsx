@@ -1,12 +1,11 @@
 import * as React from 'react'
 
-import { BottomNavigation } from '../../core/BottomNavigation/BottomNavigation'
+import { AppShell } from 'src/appshell/AppShell'
 
 export const Create = () => {
   return (
-    <div>
+    <AppShell>
       <h1>Create new</h1>
-      <BottomNavigation />
-    </div>
+    </AppShell>
   )
 }
