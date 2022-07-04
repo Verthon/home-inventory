@@ -7,7 +7,7 @@ import { ListIcon } from '../../icons/List';
 import styles from './BottomNavigation.module.css'
 
 export const BottomNavigation = () => {
-  return <div className={styles.wrapper}>
+  return <nav className={styles.wrapper}>
     <Link className={styles.link} to="/">
       <HomeIcon />
       <span>Home</span>
@@ -20,5 +20,5 @@ export const BottomNavigation = () => {
       <ListIcon />
       <span>List</span>
     </Link>
-  </div>
+  </nav>
 }
