@@ -27,13 +27,23 @@
     "test:ci": "CI=true react-scripts test --env=jsdom",
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
-    "coverage": "npm run test --watchAll -- --coverage",
+    "coverage": "npm run test -- --watchAll --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.(ts|tsx)",
+      "!src/index.tsx",
+      "!src/reportWebVitals.ts",
+      "!src/testUtils.ts",
+      "!src/router/**/*",
+      "!src/**/*.types.ts"
     ]
   },
   "browserslist": {
