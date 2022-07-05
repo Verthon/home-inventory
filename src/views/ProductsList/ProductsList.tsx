@@ -1,11 +1,10 @@
 import * as React from 'react'
-
 import { AppShell } from 'src/appshell/AppShell'
 
-export const Create = () => {
+export const ProductsList = () => {
   return (
     <AppShell>
-      <h1>Create new</h1>
+      <h1>Products List</h1>
     </AppShell>
   )
 }

@@ -1,17 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Create } from '../../views/Create/Create';
-import { Home } from '../../views/Home/Home';
+import { MemoryRouter } from 'react-router-dom';
+import { Router } from 'src/router/Router';
 
 import { BottomNavigation } from './BottomNavigation';
 
 const createWrapper = () => {
   render(<MemoryRouter initialEntries={["/"]}>
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="create" element={<Create />}></Route>
-    </Routes>
+    <Router />
     <BottomNavigation />
   </MemoryRouter>)
 }
@@ -31,12 +27,20 @@ describe('BottomNavigation', () => {
     })
   })
 
-  it('should have change the location based on which button was clicked', () => {
+  it('should have change the location based on which button was clicked', async () => {
     createWrapper()
     const createButton = screen.getAllByRole('link', { name: /create/i })[0]
 
     userEvent.click(createButton)
+    expect(screen.getByRole('heading', { name: /create new/i })).toBeInTheDocument();
+  })
 
-    expect(screen.getByRole('heading', { name: 'Create new' })).toBeInTheDocument();
+  it('should have change the location to list view', async () => {
+    createWrapper()
+    const listButton = screen.getAllByRole('link', { name: /list/i })[0]
+
+
+    userEvent.click(listButton)
+    expect(screen.getByRole('heading', { name: /products list/i })).toBeInTheDocument();
   })
 })
