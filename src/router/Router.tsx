@@ -1,13 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 
-import { Create } from "../views/Create/Create";
-import { Home } from "../views/Home/Home";
+import { ProductsList } from "src/views/ProductsList/ProductsList";
+import { Create } from "src/views/Create/Create";
+import { Home } from "src/views/Home/Home";
 
 export const Router = () => {
   return (
     <Routes>
-        <Route path="/" element={<Home />}></Route>
-    <Route path="create" element={<Create />}></Route>
-      </Routes>
+      <Route path="/" element={<Home />}/>
+      <Route path="/create" element={<Create />}/>
+      <Route path="/list" element={<ProductsList />}/>
+    </Routes>
   )
 }
