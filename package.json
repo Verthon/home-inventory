@@ -1,11 +1,12 @@
 {
   "name": "home-inventory",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
     "@mantine/core": "^4.2.12",
     "@mantine/hooks": "^4.2.12",
     "@mantine/notifications": "^4.2.12",
+    "@supabase/supabase-js": "^1.35.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -15,6 +16,7 @@
     "@types/react-dom": "^18.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.7.4",
@@ -28,6 +30,7 @@
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
     "coverage": "npm run test -- --watchAll --coverage",
+    "generate-types": "npx openapi-typescript https://sjngbjrbimlskuxzflby.supabase.co/rest/v1/?apikey=your-anon-key --output src/api/api.types.ts",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,7 +46,8 @@
       "!src/reportWebVitals.ts",
       "!src/testUtils.ts",
       "!src/router/**/*",
-      "!src/**/*.types.ts"
+      "!src/**/*.types.ts",
+      "!src/testUtils.tsx"
     ]
   },
   "browserslist": {
