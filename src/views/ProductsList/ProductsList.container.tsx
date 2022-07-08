@@ -5,7 +5,7 @@ import { ProductsList } from './ProductsList'
 import { useFetchProducts } from './useFetchProducts'
 
 export const ProductsListContainer = () => {
-  const { data, status } = useFetchProducts()
+  const { status } = useFetchProducts()
 
   if(status === 'loading') {
     return <Skeleton />
