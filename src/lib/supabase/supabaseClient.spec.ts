@@ -5,9 +5,8 @@ import { getProducts } from "./supabaseClient";
 
 describe("supabaseClient", () => {
   it("should get the data and set status correctly", async () => {
-    const { data, error } = await getProducts();
+    const data = await getProducts();
 
-    expect(error).toEqual(undefined);
     expect(data).toBeDefined();
   });
 

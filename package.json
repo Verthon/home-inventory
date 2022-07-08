@@ -1,6 +1,6 @@
 {
   "name": "home-inventory",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
     "@mantine/core": "^4.2.12",
@@ -46,7 +46,8 @@
       "!src/reportWebVitals.ts",
       "!src/testUtils.ts",
       "!src/router/**/*",
-      "!src/**/*.types.ts"
+      "!src/**/*.types.ts",
+      "!src/testUtils.tsx"
     ]
   },
   "browserslist": {

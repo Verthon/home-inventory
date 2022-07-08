@@ -1,15 +1,20 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { Router } from 'src/router/Router';
+import { createTestQueryClient } from 'src/testUtils';
 
 import { BottomNavigation } from './BottomNavigation';
 
 const createWrapper = () => {
-  render(<MemoryRouter initialEntries={["/"]}>
-    <Router />
-    <BottomNavigation />
-  </MemoryRouter>)
+  const client = createTestQueryClient();
+  render(<QueryClientProvider client={client}>
+    <MemoryRouter initialEntries={["/"]}>
+      <Router />
+      <BottomNavigation />
+    </MemoryRouter>
+  </QueryClientProvider>)
 }
 
 describe('BottomNavigation', () => {
@@ -41,6 +46,8 @@ describe('BottomNavigation', () => {
 
 
     userEvent.click(listButton)
-    expect(screen.getByRole('heading', { name: /products list/i })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /products list/i })).toBeInTheDocument();
+    })
   })
 })
