@@ -1,10 +1,6 @@
 {
   "name": "home-inventory",
-<<<<<<< HEAD
   "version": "0.3.0",
-=======
-  "version": "0.2.0",
->>>>>>> master
   "private": true,
   "dependencies": {
     "@mantine/core": "^4.2.12",
@@ -33,12 +29,8 @@
     "test:ci": "CI=true react-scripts test --env=jsdom",
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
-<<<<<<< HEAD
     "coverage": "npm run test -- --watchAll --coverage",
     "generate-types": "npx openapi-typescript https://sjngbjrbimlskuxzflby.supabase.co/rest/v1/?apikey=your-anon-key --output src/api/api.types.ts",
-=======
-    "coverage": "npm run test --watchAll -- --coverage",
->>>>>>> master
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
