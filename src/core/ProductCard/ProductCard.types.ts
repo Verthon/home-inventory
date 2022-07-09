@@ -1,6 +1,7 @@
 export type ProductCardProps = {
-  boxId: number
+  boxId: string
   productName: string
   quantity: number
   loading?: boolean
+  quantityStatus?: string
 }

@@ -58,7 +58,9 @@
       "!src/reportWebVitals.ts",
       "!src/testUtils.ts",
       "!src/router/**/*",
+      "!src/api/reactQuery/**/*",
       "!src/**/*.types.ts",
+      "!src/**/*.stories.tsx",
       "!src/testUtils.tsx"
     ]
   },

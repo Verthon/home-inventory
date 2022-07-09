@@ -14,15 +14,30 @@ const Template: Story<ProductCardProps> = (args) => <ProductCard {...args} />
 
 export const LoadingProductCard = Template.bind({});
 LoadingProductCard.args = {
-  boxId: 2,
+  boxId: 'A1',
   productName: 'Eko Farma Strawberry Jam',
   quantity: 1,
   loading: true,
 };
 
+export const SingleItem = Template.bind({});
+SingleItem.args = {
+  boxId: 'A1',
+  productName: 'Eko Farma Strawberry Jam',
+  quantity: 1
+};
+
 export const Default = Template.bind({});
 Default.args = {
-  boxId: 2,
+  boxId: 'A1',
   productName: 'Eko Farma Strawberry Jam',
+  quantity: 2
+};
+
+export const WithQuantityStatus = Template.bind({});
+WithQuantityStatus.args = {
+  boxId: 'A1',
+  productName: 'Eko Farma Strawberry Jam',
+  quantityStatus: 'About to expire',
   quantity: 1
 };
