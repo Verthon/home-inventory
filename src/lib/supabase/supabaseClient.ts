@@ -12,3 +12,23 @@ export const getProducts = async() => {
 
   return data;
 }
+
+export const getProductCategories = async() => {
+  const { data, error } = await supabase.from<definitions['categories']>("categories").select("*")
+
+  if (error) {
+    throw new Error();
+  }
+
+  return data;
+}
+
+export const getBoxes = async() => {
+  const { data, error } = await supabase.from<definitions['boxes']>("boxes").select("*")
+
+  if (error) {
+    throw new Error();
+  }
+
+  return data;
+}

@@ -2,6 +2,8 @@ import { render } from "@testing-library/react";
 import { rest } from "msw";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
+import { boxesList } from "./fixtures/boxes/boxes";
+import { categoriesList } from "./fixtures/categories/categories";
 
 import { productsList } from "./fixtures/products/productsList";
 import { Router } from "./router/Router";
@@ -13,7 +15,10 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(productsList));
   }),
   rest.get(`${FAKE_DOMAIN}/categories`, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({}));
+    return res(ctx.status(200), ctx.json(categoriesList));
+  }),
+  rest.get(`${FAKE_DOMAIN}/boxes`, (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(boxesList));
   }),
 ];
 
