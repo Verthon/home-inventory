@@ -1,9 +1,10 @@
+import { EmptyStateBox } from "src/core/EmptyStateBox/EmptyStateBox"
 import { ErrorBox } from "src/core/ErrorBox/ErrorBox"
 import { ProductCard } from "src/core/ProductCard/ProductCard"
 
 import type { ProductsListProps } from "./ProductsList.types"
 
-export const ProductsList = ({ status, productsList, refetch }: ProductsListProps) => {
+export const ProductsList = ({ status, productsList, refetch, redirectToCreate }: ProductsListProps) => {
   const isEmptyList = status === 'success' && productsList.length === 0
 
   if(status === 'error') {
@@ -11,7 +12,7 @@ export const ProductsList = ({ status, productsList, refetch }: ProductsListProp
   }
 
   if(isEmptyList) {
-    return null;
+    return <EmptyStateBox redirectAction={redirectToCreate} />
   }
 
   return <div>

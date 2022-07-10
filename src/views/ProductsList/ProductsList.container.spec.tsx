@@ -1,13 +1,28 @@
-import { screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
+import { QueryClientProvider } from 'react-query';
+import { MemoryRouter } from 'react-router-dom';
+
+import { Router } from 'src/router/Router';
 import { server } from 'src/setupTests';
-import { FAKE_DOMAIN, renderWithProviders } from 'src/testUtils';
+import { createTestQueryClient, FAKE_DOMAIN } from 'src/testUtils';
 
 import { ProductsListContainer } from './ProductsList.container'
 
+const createWrapper = () => {
+  const client = createTestQueryClient();
+  render(<QueryClientProvider client={client}>
+    <MemoryRouter initialEntries={["/"]}>
+      <Router />
+      <ProductsListContainer />
+    </MemoryRouter>
+  </QueryClientProvider>)
+}
+
 describe('ProductsListContainer', () => {
   it('should fetch the list successfully', async () => {
-    renderWithProviders(<ProductsListContainer />);
+    createWrapper()
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
 
     await waitFor(() => {
@@ -23,7 +38,7 @@ describe('ProductsListContainer', () => {
         return res(ctx.status(500), ctx.json({}));
       })
     )
-    renderWithProviders(<ProductsListContainer />);
+    createWrapper()
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
 
     await waitFor(() => {
@@ -40,7 +55,7 @@ describe('ProductsListContainer', () => {
         return res(ctx.status(200), ctx.json([]));
       })
     )
-    renderWithProviders(<ProductsListContainer />);
+    createWrapper()
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
 
     await waitFor(() => {
@@ -48,6 +63,9 @@ describe('ProductsListContainer', () => {
     })
 
     expect(screen.getByRole('heading', { name: /No products yet/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /refetch/i })).toBeInTheDocument();
+    const redirectButton = screen.getByRole('button', { name: /create/i })
+    userEvent.click(redirectButton)
+
+    expect(screen.getByRole('heading', { name: /create new/i })).toBeInTheDocument();
   })
 })

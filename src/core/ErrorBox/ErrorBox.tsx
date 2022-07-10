@@ -1,6 +1,6 @@
 import { Button } from "../Button/Button"
 
-import { ErrorBoxProps } from "./ErrorBox.types"
+import type { ErrorBoxProps } from "./ErrorBox.types"
 import styles from './ErrorBox.module.css'
 
 export const ErrorBox = ({ refetchAction, customRefetchText, customMessageText }: ErrorBoxProps) => {

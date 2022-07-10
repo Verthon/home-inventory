@@ -15,4 +15,5 @@ export type ProductsListProps = {
   status: QueryStatus
   productsList: ProductsListItem[]
   refetch: () => void
+  redirectToCreate: () => void
 }
