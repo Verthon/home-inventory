@@ -11,5 +11,7 @@ describe('ProductsListContainer', () => {
     await waitFor(() => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     })
+
+    expect(screen.getAllByRole('listitem')).toHaveLength(5);
   })
 })

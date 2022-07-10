@@ -1,7 +1,5 @@
+import { DisplayProduct } from "src/views/ProductsList/ProductsList.types"
+
 export type ProductCardProps = {
-  boxId: string
-  productName: string
-  quantity: number
   loading?: boolean
-  quantityStatus?: string
-}
+} & DisplayProduct
