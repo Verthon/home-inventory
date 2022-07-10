@@ -4,6 +4,8 @@ import { setupServer } from "msw/node";
 
 import { handlers } from "./testUtils";
 
+global.ResizeObserver = require('resize-observer-polyfill')
+
 export const server = setupServer(...handlers);
 
 setLogger({

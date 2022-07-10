@@ -92,6 +92,7 @@
     "babel-plugin-named-exports-order": "^0.0.2",
     "msw": "^0.42.3",
     "prop-types": "^15.8.1",
+    "resize-observer-polyfill": "^1.5.1",
     "webpack": "^5.73.0"
   }
 }
