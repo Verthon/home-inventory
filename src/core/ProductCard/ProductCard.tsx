@@ -4,21 +4,15 @@ import { Avatar } from "../Avatar/Avatar";
 import type { ProductCardProps } from "./ProductCard.types";
 import styles from "./ProductCard.module.css";
 
-export const ProductCard = ({
+const Content = ({
   boxId,
   productName,
   quantity,
-  loading,
   quantityStatus,
 }: ProductCardProps) => {
-  const itemsLabel = quantity === 1 ? 'one item' : `${quantity} items`
-
-  if (loading) {
-    return <Skeleton animate />;
-  }
-
+  const itemsLabel = quantity === '1' ? 'one item' : `${quantity} items`
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} role='listitem'>
       <div className={styles.statusColorDotWrapper}>
         <span className={styles.statusColorDot}></span>
       </div>
@@ -31,5 +25,24 @@ export const ProductCard = ({
       </div>
       <p className={styles.quantity}>{itemsLabel}</p>
     </div>
+  );
+}
+
+export const ProductCard = ({
+  boxId,
+  productName,
+  quantity,
+  loading,
+  quantityStatus,
+}: ProductCardProps) => {
+
+  if (loading) {
+    return <Skeleton animate>
+      <Content boxId={boxId} productName={productName} quantity={quantity} quantityStatus={quantityStatus} />
+    </Skeleton>;
+  }
+
+  return (
+    <Content boxId={boxId} productName={productName} quantity={quantity} quantityStatus={quantityStatus} />
   );
 };

@@ -16,7 +16,7 @@ export const LoadingProductCard = Template.bind({});
 LoadingProductCard.args = {
   boxId: 'A1',
   productName: 'Eko Farma Strawberry Jam',
-  quantity: 1,
+  quantity: '1',
   loading: true,
 };
 
@@ -24,14 +24,14 @@ export const SingleItem = Template.bind({});
 SingleItem.args = {
   boxId: 'A1',
   productName: 'Eko Farma Strawberry Jam',
-  quantity: 1
+  quantity: '1'
 };
 
 export const Default = Template.bind({});
 Default.args = {
   boxId: 'A1',
   productName: 'Eko Farma Strawberry Jam',
-  quantity: 2
+  quantity: '2'
 };
 
 export const WithQuantityStatus = Template.bind({});
@@ -39,5 +39,5 @@ WithQuantityStatus.args = {
   boxId: 'A1',
   productName: 'Eko Farma Strawberry Jam',
   quantityStatus: 'About to expire',
-  quantity: 1
+  quantity: '1'
 };

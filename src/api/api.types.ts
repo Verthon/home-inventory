@@ -28,6 +28,7 @@ export interface paths {
           quantity?: parameters["rowFilter.products.quantity"];
           /** expiry date of the product */
           expiry_date?: parameters["rowFilter.products.expiry_date"];
+          box_id?: parameters["rowFilter.products.box_id"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -90,6 +91,7 @@ export interface paths {
           quantity?: parameters["rowFilter.products.quantity"];
           /** expiry date of the product */
           expiry_date?: parameters["rowFilter.products.expiry_date"];
+          box_id?: parameters["rowFilter.products.box_id"];
         };
         header: {
           /** Preference */
@@ -116,10 +118,107 @@ export interface paths {
           quantity?: parameters["rowFilter.products.quantity"];
           /** expiry date of the product */
           expiry_date?: parameters["rowFilter.products.expiry_date"];
+          box_id?: parameters["rowFilter.products.box_id"];
         };
         body: {
           /** products */
           products?: definitions["products"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/boxes": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.boxes.id"];
+          created_at?: parameters["rowFilter.boxes.created_at"];
+          edited_at?: parameters["rowFilter.boxes.edited_at"];
+          box_name?: parameters["rowFilter.boxes.box_name"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["boxes"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** boxes */
+          boxes?: definitions["boxes"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.boxes.id"];
+          created_at?: parameters["rowFilter.boxes.created_at"];
+          edited_at?: parameters["rowFilter.boxes.edited_at"];
+          box_name?: parameters["rowFilter.boxes.box_name"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.boxes.id"];
+          created_at?: parameters["rowFilter.boxes.created_at"];
+          edited_at?: parameters["rowFilter.boxes.edited_at"];
+          box_name?: parameters["rowFilter.boxes.box_name"];
+        };
+        body: {
+          /** boxes */
+          boxes?: definitions["boxes"];
         };
         header: {
           /** Preference */
@@ -279,6 +378,30 @@ export interface definitions {
      * @description expiry date of the product
      */
     expiry_date: string;
+    /**
+     * Format: smallint
+     * @description Note:
+     * This is a Foreign Key to `boxes.id`.<fk table='boxes' column='id'/>
+     */
+    box_id?: number;
+  };
+  /** @description Boxes that keep certain products with description where they are */
+  boxes: {
+    /**
+     * Format: smallint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    created_at?: string;
+    /** Format: timestamp with time zone */
+    edited_at?: string;
+    /** Format: text */
+    box_name?: string;
   };
   /** @description categories used for filtering the */
   categories: {
@@ -369,6 +492,18 @@ export interface parameters {
    * @description expiry date of the product
    */
   "rowFilter.products.expiry_date": string;
+  /** Format: smallint */
+  "rowFilter.products.box_id": string;
+  /** @description boxes */
+  "body.boxes": definitions["boxes"];
+  /** Format: smallint */
+  "rowFilter.boxes.id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.boxes.created_at": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.boxes.edited_at": string;
+  /** Format: text */
+  "rowFilter.boxes.box_name": string;
   /** @description categories */
   "body.categories": definitions["categories"];
   /** Format: integer */
