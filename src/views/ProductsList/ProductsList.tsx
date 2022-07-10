@@ -1,13 +1,23 @@
+import { ErrorBox } from "src/core/ErrorBox/ErrorBox"
 import { ProductCard } from "src/core/ProductCard/ProductCard"
+
 import type { ProductsListProps } from "./ProductsList.types"
 
-export const ProductsList = ({ status, productsList }: ProductsListProps) => {
+export const ProductsList = ({ status, productsList, refetch }: ProductsListProps) => {
+  const isEmptyList = status === 'success' && productsList.length === 0
+
+  if(status === 'error') {
+    return <ErrorBox refetchAction={refetch} />
+  }
+
+  if(isEmptyList) {
+    return null;
+  }
+
   return <div>
     <h1>Products List</h1>
-    <ProductCard boxId={productsList[0].boxId} productName={productsList[0].productName} quantity={productsList[0].quantity} />
-    <ProductCard boxId={productsList[0].boxId} productName={productsList[0].productName} quantity={productsList[0].quantity} />
-    <ProductCard boxId={productsList[0].boxId} productName={productsList[0].productName} quantity={productsList[0].quantity} />
-    <ProductCard boxId={productsList[0].boxId} productName={productsList[0].productName} quantity={productsList[0].quantity} />
-    <ProductCard boxId={productsList[0].boxId} productName={productsList[0].productName} quantity={productsList[0].quantity} />
+    {productsList.map((product) => {
+      return <ProductCard key={product.id} boxId={product.boxId} productName={product.productName} quantity={product.quantity} />
+    })}
   </div>
 }

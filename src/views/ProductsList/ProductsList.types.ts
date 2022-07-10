@@ -7,7 +7,12 @@ export type DisplayProduct = {
   quantityStatus?: string
 }
 
+export type ProductsListItem = {
+  id: number
+} & DisplayProduct
+
 export type ProductsListProps = {
   status: QueryStatus
-  productsList: DisplayProduct[]
+  productsList: ProductsListItem[]
+  refetch: () => void
 }
