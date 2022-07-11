@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
@@ -30,13 +30,27 @@ describe('CreateFormContainer', () => {
     const submitButton = screen.getAllByRole('button', { name: /create/i })[0]
     expect(submitButton).toBeDisabled()
 
-    user.type(nameInput, 'Dandelion honey')
-    user.type(shortDescriptionInput, 'Honey partially cyrstallized, 1kg jar')
-    user.type(quantityInput, '3')
-    user.type(categorySelect, 'Honeys')
-    user.keyboard('enter')
-    user.type(boxNameSelect, 'A1')
+    await user.type(nameInput, 'Dandelion honey')
+    await user.type(shortDescriptionInput, 'Honey partially crystallized, 1kg jar')
+    await user.type(quantityInput, '3')
+    await user.click(categorySelect)
+    await waitFor(() => {
+      user.click(screen.getByText(/honeys/i))
+    })
+    await user.click(boxNameSelect)
+    await waitFor(() => {
+      user.click(screen.getByText('A1'))
+    })
+    await user.keyboard('enter')
     await user.click(expiryDateInput)
-    user.click(screen.getAllByRole('button', { name: '10' })[0])
+    await waitFor(() => {
+      user.click(screen.getAllByRole('button', { name: '10' })[0])
+    })
+
+    await waitFor(() => {
+      expect(submitButton).not.toBeDisabled()
+    })
+
+    user.click(submitButton)
   })
 })
