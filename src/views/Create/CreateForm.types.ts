@@ -1,4 +1,4 @@
-export type CreateFormValue = {
+export type CreateFormValues = {
   productName: string;
   shortDescription: string;
   quantity: string;

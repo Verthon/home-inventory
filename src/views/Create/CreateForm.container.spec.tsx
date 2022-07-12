@@ -17,10 +17,10 @@ const createWrapper = () => {
 }
 
 describe('CreateFormContainer', () => {
+  jest.setTimeout(10000)
   it('should allow to create new product just by filling required fields', async () => {
     const user = userEvent.setup()
     createWrapper()
-    const form = screen.getAllByRole('form')[0]
     const nameInput = screen.getAllByPlaceholderText(/product name/i)[0]
     const shortDescriptionInput = screen.getAllByPlaceholderText(/short description/i)[0]
     const quantityInput = screen.getAllByPlaceholderText(/quantity/i)[0]
@@ -41,7 +41,6 @@ describe('CreateFormContainer', () => {
     await waitFor(() => {
       user.click(screen.getByText('A1'))
     })
-    await user.keyboard('enter')
     await user.click(expiryDateInput)
     await waitFor(() => {
       user.click(screen.getAllByRole('button', { name: '10' })[0])
@@ -51,6 +50,10 @@ describe('CreateFormContainer', () => {
       expect(submitButton).not.toBeDisabled()
     })
 
-    user.click(submitButton)
+    await user.click(submitButton)
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /products list/i })).toBeInTheDocument();
+    })
   })
 })

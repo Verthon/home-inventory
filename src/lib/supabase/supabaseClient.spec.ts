@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import { server } from "src/setupTests";
 import { FAKE_DOMAIN } from "src/testUtils";
-import { getBoxes, getProductCategories, getProducts } from "./supabaseClient";
+import { addProduct, getBoxes, getProductCategories, getProducts } from "./supabaseClient";
 
 const genericError = {
   message: "Server error",
@@ -78,6 +78,31 @@ describe("supabaseClient", () => {
       );
   
       await expect(getBoxes()).rejects.toThrow();
+    });
+  })
+
+  describe("addProduct", () => {
+    const payload = { expiry_date: '2022-11-12', quantity: 2, category_id: 1, short_description: 'test', name: 'testName' }
+    it("should post the data and set status correctly", async () => {
+      const data = await addProduct(payload);
+  
+      expect(data).toBeDefined();
+    });
+  
+    it("should throw an error in case addProduct api call fail(required for React Query to handle error properly)", async () => {
+      server.use(
+        rest.post(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
+          return res(
+            ctx.status(500),
+            ctx.json({
+              data: null,
+              error: genericError,
+            })
+          );
+        }),
+      );
+  
+      await expect(addProduct(payload)).rejects.toThrow();
     });
   })
 });

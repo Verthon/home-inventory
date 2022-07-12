@@ -20,6 +20,9 @@ export const handlers = [
   rest.get(`${FAKE_DOMAIN}/boxes`, (_req, res, ctx) => {
     return res(ctx.status(200), ctx.json(boxesList));
   }),
+  rest.post(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
+    return res(ctx.status(201), ctx.json({}));
+  }),
 ];
 
 export const createTestQueryClient = () =>
