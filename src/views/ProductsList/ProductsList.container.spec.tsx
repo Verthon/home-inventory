@@ -55,6 +55,7 @@ describe('ProductsListContainer', () => {
         return res(ctx.status(200), ctx.json([]));
       })
     )
+    const user = userEvent.setup()
     createWrapper()
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
 
@@ -64,8 +65,10 @@ describe('ProductsListContainer', () => {
 
     expect(screen.getByRole('heading', { name: /No products yet/i })).toBeInTheDocument();
     const redirectButton = screen.getByRole('button', { name: /create/i })
-    userEvent.click(redirectButton)
+    user.click(redirectButton)
 
-    expect(screen.getByRole('heading', { name: /create new/i })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /create new/i })).toBeInTheDocument();
+    })
   })
 })
