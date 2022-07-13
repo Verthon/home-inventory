@@ -34,9 +34,9 @@
     "lint:fix": "npm run lint -- --fix",
     "coverage": "npm run test -- --watchAll --coverage",
     "generate-types": "npx openapi-typescript https://sjngbjrbimlskuxzflby.supabase.co/rest/v1/?apikey=your-anon-key --output src/api/api.types.ts",
-    "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
