@@ -2,16 +2,26 @@ import { render } from "@testing-library/react";
 import { rest } from "msw";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
+import { boxesList } from "./fixtures/boxes/boxes";
+import { categoriesList } from "./fixtures/categories/categories";
+
+import { productsList } from "./fixtures/products/productsList";
 import { Router } from "./router/Router";
 
 export const FAKE_DOMAIN = "https://sjngbjrbimlskuxzflby.supabase.co/rest/v1";
 
 export const handlers = [
   rest.get(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ data: [] }));
+    return res(ctx.status(200), ctx.json(productsList));
   }),
   rest.get(`${FAKE_DOMAIN}/categories`, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({}));
+    return res(ctx.status(200), ctx.json(categoriesList));
+  }),
+  rest.get(`${FAKE_DOMAIN}/boxes`, (_req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(boxesList));
+  }),
+  rest.post(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
+    return res(ctx.status(201), ctx.json({}));
   }),
 ];
 

@@ -1,33 +1,108 @@
 import { rest } from "msw";
 import { server } from "src/setupTests";
 import { FAKE_DOMAIN } from "src/testUtils";
-import { getProducts } from "./supabaseClient";
+import { addProduct, getBoxes, getProductCategories, getProducts } from "./supabaseClient";
+
+const genericError = {
+  message: "Server error",
+  details: "",
+  hint: "",
+  code: "C32D",
+}
 
 describe("supabaseClient", () => {
-  it("should get the data and set status correctly", async () => {
-    const data = await getProducts();
+  describe('getProducts', () => {
+    it("should get the data and set status correctly", async () => {
+      const data = await getProducts();
+  
+      expect(data).toBeDefined();
+    });
+  
+    it("should throw an error in case getProducts api call fail(required for React Query to handle error properly)", async () => {
+      server.use(
+        rest.get(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
+          return res(
+            ctx.status(500),
+            ctx.json({
+              data: null,
+              error: genericError,
+            })
+          );
+        }),
+      );
+  
+      await expect(getProducts()).rejects.toThrow();
+    });
+  })
+  describe('getProductCategories', () => {
+    it("should get the data and set status correctly", async () => {
+      const data = await getProductCategories();
+  
+      expect(data).toBeDefined();
+    });
+  
+    it("should throw an error in case getProductCategories api call fail(required for React Query to handle error properly)", async () => {
+      server.use(
+        rest.get(`${FAKE_DOMAIN}/categories`, (_req, res, ctx) => {
+          return res(
+            ctx.status(500),
+            ctx.json({
+              data: null,
+              error: genericError,
+            })
+          );
+        }),
+      );
+  
+      await expect(getProductCategories()).rejects.toThrow();
+    });
+  })
+  describe('getBoxes', () => {
+    it("should get the data and set status correctly", async () => {
+      const data = await getBoxes();
+  
+      expect(data).toBeDefined();
+    });
+  
+    it("should throw an error in case getBoxes api call fail(required for React Query to handle error properly)", async () => {
+      server.use(
+        rest.get(`${FAKE_DOMAIN}/boxes`, (_req, res, ctx) => {
+          return res(
+            ctx.status(500),
+            ctx.json({
+              data: null,
+              error: genericError,
+            })
+          );
+        }),
+      );
+  
+      await expect(getBoxes()).rejects.toThrow();
+    });
+  })
 
-    expect(data).toBeDefined();
-  });
-
-  it("should throw an error in case getProducts api call fail(required for React Query to handle error properly)", async () => {
-    server.use(
-      rest.get(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
-        return res(
-          ctx.status(500),
-          ctx.json({
-            data: null,
-            error: {
-              message: "Server error",
-              details: "",
-              hint: "",
-              code: "C32D",
-            },
-          })
-        );
-      }),
-    );
-
-    await expect(getProducts()).rejects.toThrow();
-  });
+  describe("addProduct", () => {
+    const payload = { expiry_date: '2022-11-12', quantity: 2, category_id: 1, short_description: 'test', name: 'testName' }
+    it("should post the data and set status correctly", async () => {
+      const data = await addProduct(payload);
+  
+      expect(data).toBeDefined();
+    });
+  
+    it("should throw an error in case addProduct api call fail(required for React Query to handle error properly)", async () => {
+      server.use(
+        rest.post(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
+          return res(
+            ctx.status(500),
+            ctx.json({
+              data: null,
+              error: genericError,
+            })
+          );
+        }),
+      );
+  
+      await expect(addProduct(payload)).rejects.toThrow();
+    });
+  })
 });

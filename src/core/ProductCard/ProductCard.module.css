@@ -1,0 +1,50 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 1.5rem 1rem;
+  border-radius: 5px;
+  max-width: 500px;
+}
+
+.statusColorDotWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.statusColorDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: aquamarine;
+}
+
+.avatar {
+  margin-right: 1rem;
+}
+
+.productNameWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+
+.productName {
+  font-weight: bold;
+}
+
+.productBoxName {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+  color: #8F9BB4;
+}
+
+.quantityStatus {
+  color: #8F9BB4;
+}
+
+.quantity {
+  font-size: 1rem;
+}
