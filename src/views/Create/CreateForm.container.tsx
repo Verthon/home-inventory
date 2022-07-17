@@ -1,6 +1,7 @@
 import * as React from "react";
-import { useForm } from "@mantine/form";
+import { useForm, zodResolver } from "@mantine/form";
 import dayjs from "dayjs";
+import { z } from 'zod';
 
 import type { AddProductPayload } from "src/lib/supabase/supabaseClient";
 import { Button } from "src/core/Button/Button";
@@ -19,7 +20,13 @@ export const CreateFormContainer = () => {
   const { status: boxesStatus, boxesList } = useFetchBoxes();
   const { status: createProductStatus, mutate: createProduct } =
     useCreateProduct();
+  const schema = z.object({
+    productName: z.string().min(2, { message: 'Name should have at least 2 letters' }),
+    shortDescription: z.string().min(15, { message: 'Short description should have at lease 15 letters' }).max(250, { message: 'Max 250 characters is supported for description' }),
+    quantity: z.number().min(1, { message: 'You have to add at least one product' }).max(100, { message: 'Max 100 products is supported for one product' }),
+  });
   const form = useForm<CreateFormValues>({
+    schema: zodResolver(schema),
     initialValues: {
       productName: "",
       shortDescription: "",
@@ -52,6 +59,11 @@ export const CreateFormContainer = () => {
   const isBoxSelectDisabled = isProductSubmitting || boxesStatus === 'loading'
   const isCategorySelectDisabled = isProductSubmitting || categoriesStatus === 'loading'
 
+  const handleInputValidation = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    const inputName = e.target.name
+    form.validateField(inputName)
+  }
+
   const isSubmitDisabled =
     !form.values.productName ||
     !form.values.quantity ||
@@ -66,26 +78,32 @@ export const CreateFormContainer = () => {
       <form aria-label="form" onSubmit={form.onSubmit(handleSubmit)}>
         <InputField
           label="Product name"
+          name="productName"
           type="text"
           placeholder="Product name"
           {...form.getInputProps("productName")}
           disabled={isProductSubmitting}
           required
+          onBlur={handleInputValidation}
         />
         <InputField
           label="Product short description"
           type="text"
+          name="shortDescription"
           placeholder="Short description"
           disabled={isProductSubmitting}
           {...form.getInputProps("shortDescription")}
           required
+          onBlur={handleInputValidation}
         />
         <NumberInputField
           label="Product quantity"
           placeholder="Quantity"
+          name="quantity"
           {...form.getInputProps("quantity")}
           disabled={isProductSubmitting}
           required
+          onBlur={handleInputValidation}
         />
         <Select
           label="Product category"
