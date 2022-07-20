@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { AppShell } from 'src/appshell/AppShell'
 
-export const HomeView = () => {
+const HomeView = () => {
   return (
     <AppShell>
       <h1>Home</h1>
@@ -12,3 +12,5 @@ export const HomeView = () => {
     </AppShell>
   )
 }
+
+export default HomeView
