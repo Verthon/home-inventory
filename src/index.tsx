@@ -1,3 +1,5 @@
+import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ReactQueryProvider } from './api/reactQuery/ReactQueryProvider';
@@ -12,11 +14,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ReactQueryProvider>
-      <RouterProvider>
-        <Router />
-      </RouterProvider>
-    </ReactQueryProvider>
+    <MantineProvider>
+      <NotificationsProvider>
+        <ReactQueryProvider>
+          <RouterProvider>
+            <Router />
+          </RouterProvider>
+        </ReactQueryProvider>
+      </NotificationsProvider>
+    </MantineProvider>
   </React.StrictMode>
 );
 
