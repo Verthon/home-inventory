@@ -4,6 +4,10 @@ import { definitions } from "src/api/api.types";
 const supabase = createClient(process.env.REACT_APP_SUPABASE_URL || '', process.env.REACT_APP_SUPABASE_ANON_KEY || '')
 
 export type AddProductPayload = Omit<definitions['products'], 'id'>
+export type LoginPayload = {
+  email: string;
+  password: string;
+}
 
 export const getProducts = async() => {
   const { data, error } = await supabase.from<definitions['products']>("products").select("*")
@@ -43,4 +47,14 @@ export const addProduct = async(values: AddProductPayload) => {
   }
 
   return data;
+}
+
+export const login = async(credentials: LoginPayload) => {
+  const { session, error } = await supabase.auth.signIn({ email: credentials.email, password: credentials.password })
+
+  if (error) {
+    throw new Error();
+  }
+
+  return session;
 }
