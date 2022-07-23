@@ -9,6 +9,7 @@ import { productsList } from "./fixtures/products/productsList";
 import { Router } from "./router/Router";
 
 export const FAKE_DOMAIN = "https://sjngbjrbimlskuxzflby.supabase.co/rest/v1";
+export const FAKE_AUTH_DOMAIN = "https://sjngbjrbimlskuxzflby.supabase.co/auth/v1"
 
 export const handlers = [
   rest.get(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
@@ -23,6 +24,9 @@ export const handlers = [
   rest.post(`${FAKE_DOMAIN}/products`, (_req, res, ctx) => {
     return res(ctx.status(201), ctx.json({}));
   }),
+  rest.post(`${FAKE_AUTH_DOMAIN}/token`, (_req, res, ctx) => {
+    return res(ctx.status(201), ctx.json({}));
+  })
 ];
 
 export const createTestQueryClient = () =>

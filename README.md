@@ -13,6 +13,22 @@ It comes with automated process for deployment and checks the code quality via G
 * [Mantine](https://mantine.dev/getting-started/)
 * [Supabase](https://supabase.com/)
 
+## Setup
+
+Set correct node version using nvm, navigate 
+
+`nvm use`
+
+Install deps
+
+`npm install`
+
+Next set the environment variables:
+
+```
+cp .env.example .env.local
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
