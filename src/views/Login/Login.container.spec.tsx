@@ -20,15 +20,16 @@ describe('LoginContainer', () => {
       </QueryClientProvider>
     )
   }
-  it('should allow to submit if the email and password is correctly filled', async () => {
+
+  it('should allow to submit if the email and password is correctly filled and redirect to homepage', async () => {
     createWrapper()
     const user = userEvent.setup()
-    const emailInput = screen.getByPlaceholderText(/your email/i)
-    const passwordInput = screen.getByPlaceholderText(/your password/i)
-    const submitButton = screen.getByRole('button', { name: /login/i })
+    const emailInput = screen.getAllByPlaceholderText(/your email/i)[0]
+    const passwordInput = screen.getAllByPlaceholderText(/your password/i)[0]
+    const submitButton = screen.getAllByRole('button', { name: /login/i })[0]
     expect(submitButton).toBeDisabled()
 
-    await user.type(emailInput, 'mycorrectemail@.test.plo')
+    await user.type(emailInput, 'mycorrectemail@test.pl')
     await user.type(passwordInput, 'admin1234')
 
     await waitFor(() => {
@@ -36,5 +37,26 @@ describe('LoginContainer', () => {
     })
 
     await user.click(submitButton)
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /home/i })).toBeInTheDocument();
+    })
+  })
+
+  it('should display the validation errors on blur and prevent submiting', async () => {
+    createWrapper()
+    const user = userEvent.setup()
+    const emailInput = screen.getAllByPlaceholderText(/your email/i)[0]
+    const passwordInput = screen.getAllByPlaceholderText(/your password/i)[0]
+    const submitButton = screen.getAllByRole('button', { name: /login/i })[0]
+
+    await user.type(emailInput, 'test')
+    await user.type(passwordInput, 'pass')
+
+    await waitFor(() => {
+      expect(screen.getByText(/correct email format/i)).toBeInTheDocument();
+    }, { timeout: 2000 })
+
+    expect(submitButton).toBeDisabled()
   })
 })
