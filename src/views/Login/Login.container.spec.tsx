@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { QueryClientProvider } from 'react-query'
 import { MemoryRouter } from 'react-router-dom'
 
+import { AuthProvider } from 'src/auth/AuthProvider'
 import { Router } from 'src/router/Router'
 import { createTestQueryClient } from 'src/testUtils'
 
@@ -14,8 +15,10 @@ describe('LoginContainer', () => {
     render(
       <QueryClientProvider client={client}>
         <MemoryRouter initialEntries={['/login']}>
-          <Router />
-          <LoginContainer />
+          <AuthProvider>
+            <Router />
+            <LoginContainer />
+          </AuthProvider>
         </MemoryRouter>
       </QueryClientProvider>
     )
@@ -39,7 +42,7 @@ describe('LoginContainer', () => {
     await user.click(submitButton)
 
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /home/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /home/i })).toBeInTheDocument()
     })
   })
 
@@ -53,9 +56,12 @@ describe('LoginContainer', () => {
     await user.type(emailInput, 'test')
     await user.type(passwordInput, 'pass')
 
-    await waitFor(() => {
-      expect(screen.getByText(/correct email format/i)).toBeInTheDocument();
-    }, { timeout: 2000 })
+    await waitFor(
+      () => {
+        expect(screen.getByText(/correct email format/i)).toBeInTheDocument()
+      },
+      { timeout: 2000 }
+    )
 
     expect(submitButton).toBeDisabled()
   })

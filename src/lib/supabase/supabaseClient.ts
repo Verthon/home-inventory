@@ -58,3 +58,9 @@ export const login = async(credentials: LoginPayload) => {
 
   return session;
 }
+
+export const getUser = () => {
+  const user = supabase.auth.user()
+
+  return user
+}

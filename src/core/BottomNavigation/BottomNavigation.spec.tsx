@@ -1,20 +1,25 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { QueryClientProvider } from 'react-query';
-import { MemoryRouter } from 'react-router-dom';
-import { Router } from 'src/router/Router';
-import { createTestQueryClient } from 'src/testUtils';
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { QueryClientProvider } from 'react-query'
+import { MemoryRouter } from 'react-router-dom'
+import { AuthProvider } from 'src/auth/AuthProvider'
+import { Router } from 'src/router/Router'
+import { createTestQueryClient } from 'src/testUtils'
 
-import { BottomNavigation } from './BottomNavigation';
+import { BottomNavigation } from './BottomNavigation'
 
 const createWrapper = () => {
-  const client = createTestQueryClient();
-  render(<QueryClientProvider client={client}>
-    <MemoryRouter initialEntries={["/"]}>
-      <Router />
-      <BottomNavigation />
-    </MemoryRouter>
-  </QueryClientProvider>)
+  const client = createTestQueryClient()
+  render(
+    <QueryClientProvider client={client}>
+      <MemoryRouter initialEntries={['/']}>
+        <AuthProvider>
+          <Router />
+          <BottomNavigation />
+        </AuthProvider>
+      </MemoryRouter>
+    </QueryClientProvider>
+  )
 }
 
 describe('BottomNavigation', () => {
@@ -28,7 +33,7 @@ describe('BottomNavigation', () => {
     const buttons = [homeButton, createButton, listButton]
 
     buttons.forEach((button) => {
-      expect(button).toBeInTheDocument();
+      expect(button).toBeInTheDocument()
     })
   })
 
@@ -39,7 +44,9 @@ describe('BottomNavigation', () => {
 
     user.click(createButton)
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /create new/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: /create new/i })
+      ).toBeInTheDocument()
     })
   })
 
@@ -48,10 +55,11 @@ describe('BottomNavigation', () => {
     const user = userEvent.setup()
     const listButton = screen.getAllByRole('link', { name: /list/i })[0]
 
-
     await user.click(listButton)
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /products list/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: /products list/i })
+      ).toBeInTheDocument()
     })
   })
 })

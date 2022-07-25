@@ -1,21 +1,25 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
+import { render, screen, waitFor } from '@testing-library/react'
+import { QueryClientProvider } from 'react-query'
+import { MemoryRouter } from 'react-router-dom'
 
-import { Router } from "src/router/Router";
-import { createTestQueryClient } from "src/testUtils";
+import { AuthProvider } from 'src/auth/AuthProvider'
+import { Router } from 'src/router/Router'
+import { createTestQueryClient } from 'src/testUtils'
 
-import { HomeContainer } from "./Home.container";
-
+import { HomeContainer } from './Home.container'
 
 const createWrapper = () => {
-  const client = createTestQueryClient();
-  render(<QueryClientProvider client={client}>
-    <MemoryRouter>
-      <Router />
-      <HomeContainer />
-    </MemoryRouter>
-  </QueryClientProvider>)
+  const client = createTestQueryClient()
+  render(
+    <QueryClientProvider client={client}>
+      <MemoryRouter>
+        <AuthProvider>
+          <Router />
+          <HomeContainer />
+        </AuthProvider>
+      </MemoryRouter>
+    </QueryClientProvider>
+  )
 }
 
 describe('HomeContainer', () => {
@@ -23,7 +27,9 @@ describe('HomeContainer', () => {
     createWrapper()
 
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /login/i})).toBeInTheDocument()
+      expect(
+        screen.getByRole('heading', { name: /login/i })
+      ).toBeInTheDocument()
     })
   })
 })
