@@ -1,33 +1,15 @@
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen, waitFor } from '@testing-library/react'
 import { rest } from 'msw'
-import { QueryClientProvider } from 'react-query'
-import { MemoryRouter } from 'react-router-dom'
 
-import { AuthProvider } from 'src/auth/AuthProvider'
-import { Router } from 'src/router/Router'
+import { routes } from 'src/router/Router'
 import { server } from 'src/setupTests'
-import { createTestQueryClient, FAKE_DOMAIN } from 'src/testUtils'
+import { createTestWrapper, FAKE_DOMAIN } from 'src/testUtils'
 
 import { ProductsListContainer } from './ProductsList.container'
 
-const createWrapper = () => {
-  const client = createTestQueryClient()
-  render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={['/']}>
-        <AuthProvider>
-          <Router />
-          <ProductsListContainer />
-        </AuthProvider>
-      </MemoryRouter>
-    </QueryClientProvider>
-  )
-}
-
 describe('ProductsListContainer', () => {
   it('should fetch the list successfully', async () => {
-    createWrapper()
+    createTestWrapper({ children: <ProductsListContainer />, initialEntries: [routes.home], isLogged: true  });
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
 
     await waitFor(() => {
@@ -43,7 +25,7 @@ describe('ProductsListContainer', () => {
         return res(ctx.status(500), ctx.json({}))
       })
     )
-    createWrapper()
+    createTestWrapper({ children: <ProductsListContainer />, initialEntries: [routes.home], isLogged: true  });
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
 
     await waitFor(() => {
@@ -62,8 +44,7 @@ describe('ProductsListContainer', () => {
         return res(ctx.status(200), ctx.json([]))
       })
     )
-    const user = userEvent.setup()
-    createWrapper()
+    const { user } = createTestWrapper({ children: <ProductsListContainer />, initialEntries: [routes.home], isLogged: true  });
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
 
     await waitFor(() => {
