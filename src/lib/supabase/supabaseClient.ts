@@ -9,6 +9,8 @@ export type LoginPayload = {
   password: string;
 }
 
+export const supabaseAuth = supabase.auth
+
 export const getProducts = async() => {
   const { data, error } = await supabase.from<definitions['products']>("products").select("*")
   
@@ -50,11 +52,21 @@ export const addProduct = async(values: AddProductPayload) => {
 }
 
 export const login = async(credentials: LoginPayload) => {
-  const { session, error } = await supabase.auth.signIn({ email: credentials.email, password: credentials.password })
+  const { session, error } = await supabaseAuth.signIn({ email: credentials.email, password: credentials.password })
 
   if (error) {
     throw new Error();
   }
 
   return session;
+}
+
+export const getUser = () => {
+  const user = supabaseAuth.user()
+
+  return user
+}
+
+export const onAuthChange = () => {
+  return supabaseAuth.onAuthStateChange
 }

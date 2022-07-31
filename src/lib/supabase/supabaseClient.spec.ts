@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import { server } from "src/setupTests";
 import { FAKE_AUTH_DOMAIN, FAKE_DOMAIN } from "src/testUtils";
-import { addProduct, getBoxes, getProductCategories, getProducts, login } from "./supabaseClient";
+import { addProduct, getBoxes, getProductCategories, getProducts, getUser, login } from "./supabaseClient";
 
 const genericError = {
   message: "Server error",
@@ -129,5 +129,13 @@ describe("supabaseClient", () => {
   
       await expect(login(payload)).rejects.toThrow();
     });
+  })
+
+  describe('get user', () => {
+    it('should return current user', () => {
+      const user = getUser();
+  
+      expect(user).toEqual(null)
+    })
   })
 });
