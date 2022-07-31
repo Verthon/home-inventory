@@ -11,4 +11,5 @@ export type AuthContextProps = {
 
 export type AuthProviderProps = {
   children: React.ReactNode
+  user?: AuthContextProps['user']
 }

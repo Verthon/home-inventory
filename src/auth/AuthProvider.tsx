@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type { User } from '@supabase/supabase-js';
-import { getUser } from 'src/lib/supabase/supabaseClient';
+import { getUser, supabaseAuth } from 'src/lib/supabase/supabaseClient';
 
 import { useLogin } from "src/views/Login/useLogin"
 import { AuthContext } from "./AuthContext"
@@ -26,16 +26,27 @@ export const useAuth = () => {
   };
 };
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = React.useState<User | null>(null)
+export const AuthProvider = ({ children, user = null }: AuthProviderProps) => {
+  const [currentUser, setCurrentUser] = React.useState<User | null>(getUser() || user)
   const { loginAction: login, status } = useLogin()
 
   React.useEffect(() => {
-    setUser(getUser())
-  }, [])
+    const { data: authListener } = supabaseAuth.onAuthStateChange(
+      async (_event, session) => {
+        if (session) {
+          setCurrentUser(session.user) 
+        }
+      }
+    );
+
+    return () => {
+      if (authListener) authListener.unsubscribe();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [supabaseAuth]);
 
 
-  return <AuthContext.Provider value={{login, user, authStatus: status}}>
+  return <AuthContext.Provider value={{login, user: currentUser, authStatus: status}}>
     {children}
   </AuthContext.Provider>
 }

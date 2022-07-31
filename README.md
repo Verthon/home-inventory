@@ -3,6 +3,7 @@
 Goal: application that allow users to manage the home storage in one application, that runs on any mobile device.
 
 ![Build status](https://github.com/verthon/home-inventory/actions/workflows/nodejs.yml/badge.svg)
+![Vercel](https://home-inventory-alpha.vercel.app/?app=therealsujitk-vercel-badge)
 
 ## Tech stack
 The application is [PWA](https://web.dev/progressive-web-apps/) and is developed with [TDD](https://martinfowler.com/bliki/TestDrivenDevelopment.html).
