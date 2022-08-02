@@ -1,12 +1,7 @@
-import type { Session, User } from "@supabase/supabase-js"
-import type { QueryStatus, UseMutateFunction } from "react-query"
-
-import { LoginPayload } from "src/lib/supabase/supabaseClient"
+import type { User } from "@supabase/supabase-js"
 
 export type AuthContextProps = {
   user: User | null
-  authStatus: QueryStatus
-  login: UseMutateFunction<Session | null, unknown, LoginPayload, unknown>
 }
 
 export type AuthProviderProps = {

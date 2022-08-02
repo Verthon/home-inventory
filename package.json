@@ -31,6 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --runInBand",
     "test:ci": "CI=true react-scripts test --env=jsdom",
+    "test:clear": "react-scripts test --clearCache",
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
     "coverage": "npm run test -- --watchAll --coverage",
