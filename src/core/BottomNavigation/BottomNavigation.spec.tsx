@@ -1,30 +1,12 @@
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { QueryClientProvider } from 'react-query'
-import { MemoryRouter } from 'react-router-dom'
-import { AuthProvider } from 'src/auth/AuthProvider'
-import { Router } from 'src/router/Router'
-import { createTestQueryClient } from 'src/testUtils'
+import { screen, waitFor } from '@testing-library/react'
+
+import { createTestWrapper } from 'src/testUtils'
 
 import { BottomNavigation } from './BottomNavigation'
 
-const createWrapper = () => {
-  const client = createTestQueryClient()
-  render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={['/']}>
-        <AuthProvider>
-          <Router />
-          <BottomNavigation />
-        </AuthProvider>
-      </MemoryRouter>
-    </QueryClientProvider>
-  )
-}
-
 describe('BottomNavigation', () => {
   it('should have 3 default routes (home, create, list)', () => {
-    createWrapper()
+    createTestWrapper({ children: <BottomNavigation />, isLogged: true  });
 
     const homeButton = screen.getAllByRole('link', { name: /home/i })[0]
     const createButton = screen.getAllByRole('link', { name: /create/i })[0]
@@ -38,9 +20,8 @@ describe('BottomNavigation', () => {
   })
 
   it('should have change the location based on which button was clicked', async () => {
-    createWrapper()
+    const { user }  = createTestWrapper({ children: <BottomNavigation />, isLogged: true  });
     const createButton = screen.getAllByRole('link', { name: /create/i })[0]
-    const user = userEvent.setup()
 
     user.click(createButton)
     await waitFor(() => {
@@ -51,8 +32,7 @@ describe('BottomNavigation', () => {
   })
 
   it('should have change the location to list view', async () => {
-    createWrapper()
-    const user = userEvent.setup()
+    const { user }  = createTestWrapper({ children: <BottomNavigation />, isLogged: true  });
     const listButton = screen.getAllByRole('link', { name: /list/i })[0]
 
     await user.click(listButton)

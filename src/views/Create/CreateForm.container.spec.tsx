@@ -1,34 +1,15 @@
-import { act, render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen, waitFor } from '@testing-library/react'
 import { rest } from 'msw'
-import { QueryClientProvider } from 'react-query'
-import { MemoryRouter } from 'react-router-dom'
 
-import { AuthProvider } from 'src/auth/AuthProvider'
-import { Router } from 'src/router/Router'
+import { routes } from 'src/router/Router'
 import { server } from 'src/setupTests'
-import { createTestQueryClient, FAKE_DOMAIN } from 'src/testUtils'
+import { createTestWrapper, FAKE_DOMAIN } from 'src/testUtils'
 
 import { CreateFormContainer } from './CreateForm.container'
 
-const createWrapper = () => {
-  const client = createTestQueryClient()
-  render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={['/create']}>
-        <AuthProvider>
-          <Router />
-          <CreateFormContainer />
-        </AuthProvider>
-      </MemoryRouter>
-    </QueryClientProvider>
-  )
-}
-
 describe('CreateFormContainer', () => {
   it('should allow to create new product just by filling required fields', async () => {
-    const user = userEvent.setup()
-    createWrapper()
+    const { user } = createTestWrapper({ children: <CreateFormContainer />, initialEntries: [routes.create], isLogged: true  });
     const nameInput = screen.getAllByPlaceholderText(/product name/i)[0]
     const shortDescriptionInput =
       screen.getAllByPlaceholderText(/short description/i)[0]
@@ -95,10 +76,11 @@ describe('CreateFormContainer', () => {
         return res(ctx.status(500), ctx.json({}))
       })
     )
-    const user = userEvent.setup()
-    act(() => {
-      createWrapper()
-    })
+
+    const { user } = createTestWrapper({ children: <CreateFormContainer />, initialEntries: [routes.create], isLogged: true  });
+    // act(() => {
+    //   const { user } = createTestWrapper({ children: <CreateFormContainer />, initialEntries: [routes.create], isLogged: true  });
+    // })
     const nameInput = screen.getAllByPlaceholderText(/product name/i)[0]
     const shortDescriptionInput =
       screen.getAllByPlaceholderText(/short description/i)[0]
@@ -151,8 +133,7 @@ describe('CreateFormContainer', () => {
   }, 30000)
 
   it('should show the validation errors for user on blur', async () => {
-    const user = userEvent.setup()
-    createWrapper()
+    const { user } = createTestWrapper({ children: <CreateFormContainer />, initialEntries: [routes.create], isLogged: true  });
     const nameInput = screen.getAllByPlaceholderText(/product name/i)[0]
     const shortDescriptionInput =
       screen.getAllByPlaceholderText(/short description/i)[0]
