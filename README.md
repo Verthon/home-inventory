@@ -3,6 +3,7 @@
 Goal: application that allow users to manage the home storage in one application, that runs on any mobile device.
 
 ![Build status](https://github.com/verthon/home-inventory/actions/workflows/nodejs.yml/badge.svg)
+![Vercel](https://home-inventory-alpha.vercel.app/?app=therealsujitk-vercel-badge)
 
 ## Tech stack
 The application is [PWA](https://web.dev/progressive-web-apps/) and is developed with [TDD](https://martinfowler.com/bliki/TestDrivenDevelopment.html).
@@ -12,6 +13,22 @@ It comes with automated process for deployment and checks the code quality via G
 * [TypeScript](https://www.typescriptlang.org/)
 * [Mantine](https://mantine.dev/getting-started/)
 * [Supabase](https://supabase.com/)
+
+## Setup
+
+Set correct node version using nvm, navigate 
+
+`nvm use`
+
+Install deps
+
+`npm install`
+
+Next set the environment variables:
+
+```
+cp .env.example .env.local
+```
 
 ## Available Scripts
 
