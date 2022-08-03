@@ -1,25 +1,12 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { QueryClientProvider } from 'react-query';
-import { MemoryRouter } from 'react-router-dom';
-import { Router } from 'src/router/Router';
-import { createTestQueryClient } from 'src/testUtils';
+import { screen, waitFor } from '@testing-library/react'
 
-import { BottomNavigation } from './BottomNavigation';
+import { createTestWrapper } from 'src/testUtils'
 
-const createWrapper = () => {
-  const client = createTestQueryClient();
-  render(<QueryClientProvider client={client}>
-    <MemoryRouter initialEntries={["/"]}>
-      <Router />
-      <BottomNavigation />
-    </MemoryRouter>
-  </QueryClientProvider>)
-}
+import { BottomNavigation } from './BottomNavigation'
 
 describe('BottomNavigation', () => {
   it('should have 3 default routes (home, create, list)', () => {
-    createWrapper()
+    createTestWrapper({ children: <BottomNavigation />, isLogged: true  });
 
     const homeButton = screen.getAllByRole('link', { name: /home/i })[0]
     const createButton = screen.getAllByRole('link', { name: /create/i })[0]
@@ -28,30 +15,31 @@ describe('BottomNavigation', () => {
     const buttons = [homeButton, createButton, listButton]
 
     buttons.forEach((button) => {
-      expect(button).toBeInTheDocument();
+      expect(button).toBeInTheDocument()
     })
   })
 
   it('should have change the location based on which button was clicked', async () => {
-    createWrapper()
+    const { user }  = createTestWrapper({ children: <BottomNavigation />, isLogged: true  });
     const createButton = screen.getAllByRole('link', { name: /create/i })[0]
-    const user = userEvent.setup()
 
     user.click(createButton)
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /create new/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: /create new/i })
+      ).toBeInTheDocument()
     })
   })
 
   it('should have change the location to list view', async () => {
-    createWrapper()
-    const user = userEvent.setup()
+    const { user }  = createTestWrapper({ children: <BottomNavigation />, isLogged: true  });
     const listButton = screen.getAllByRole('link', { name: /list/i })[0]
-
 
     await user.click(listButton)
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /products list/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: /products list/i })
+      ).toBeInTheDocument()
     })
   })
 })

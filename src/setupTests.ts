@@ -5,6 +5,7 @@ import { setupServer } from "msw/node";
 import { handlers } from "./testUtils";
 
 global.ResizeObserver = require('resize-observer-polyfill')
+// jest.useFakeTimers();
 
 export const server = setupServer(...handlers);
 

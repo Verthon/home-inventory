@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import { server } from "src/setupTests";
-import { FAKE_DOMAIN } from "src/testUtils";
-import { addProduct, getBoxes, getProductCategories, getProducts } from "./supabaseClient";
+import { FAKE_AUTH_DOMAIN, FAKE_DOMAIN } from "src/testUtils";
+import { addProduct, getBoxes, getProductCategories, getProducts, getUser, login } from "./supabaseClient";
 
 const genericError = {
   message: "Server error",
@@ -104,5 +104,38 @@ describe("supabaseClient", () => {
   
       await expect(addProduct(payload)).rejects.toThrow();
     });
+  })
+
+  describe('login', () => {
+    const payload = { email: 'my-email@test.pol', password: 'admin1234' }
+    it("should post the data and set status correctly", async () => {
+      const data = await login(payload);
+  
+      expect(data).toBeDefined();
+    });
+  
+    it("should throw an error in case addProduct api call fail(required for React Query to handle error properly)", async () => {
+      server.use(
+        rest.post(`${FAKE_AUTH_DOMAIN}/token`, (_req, res, ctx) => {
+          return res(
+            ctx.status(500),
+            ctx.json({
+              data: null,
+              error: genericError,
+            })
+          );
+        }),
+      );
+  
+      await expect(login(payload)).rejects.toThrow();
+    });
+  })
+
+  describe('get user', () => {
+    it('should return current user', () => {
+      const user = getUser();
+  
+      expect(user).toEqual(null)
+    })
   })
 });
