@@ -78,7 +78,9 @@
       "!src/api/reactQuery/**/*",
       "!src/**/*.types.ts",
       "!src/**/*.stories.tsx",
-      "!src/testUtils.tsx"
+      "!src/testUtils.tsx",
+      "!src/service-worker.ts",
+      "!src/serviceWorkerRegistration.ts"
     ]
   },
   "browserslist": {

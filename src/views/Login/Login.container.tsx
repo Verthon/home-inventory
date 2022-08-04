@@ -1,14 +1,25 @@
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { useAuth } from 'src/auth/AuthProvider'
 import { Button } from 'src/core/Button/Button'
 import { InputField } from 'src/core/InputField/InputField'
+import { routes } from 'src/router/Router'
 
 import { useLogin } from './useLogin'
 import { useLoginForm } from './useLoginForm'
 
 export const LoginContainer = () => {
+  const navigate = useNavigate()
   const { loginAction: login, status } = useLogin()
+  const { user } = useAuth();
   const { form, isSubmitDisabled, handleInputValidation, handleSubmit } = useLoginForm({ login })
+
+  if(user) {
+    navigate(routes.home)
+    return null
+  }
+
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
