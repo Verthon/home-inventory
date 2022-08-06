@@ -9,6 +9,7 @@ import { NoMatchView } from "src/views/NoMatch/NoMatch.view";
 import { LazyRouteLoader } from "src/core/LazyRouteLoader/LazyRouteLoader";
 import LoginView from "src/views/Login/Login.view";
 import { AuthRouteWrapper } from "./AuthRouteWrapper";
+import { ForgotPasswordView } from "src/views/ForgotPassword/ForgotPassword.view";
 
 export const routes: Record<string, AppRoute> = {
   home: "/",
@@ -25,6 +26,7 @@ export const Router = () => {
       <Route path={routes.create} element={<AuthRouteWrapper><React.Suspense fallback={<LazyRouteLoader/>}><CreateView /></React.Suspense></AuthRouteWrapper>}/>
       <Route path={routes.list} element={<AuthRouteWrapper><React.Suspense fallback={<LazyRouteLoader/>}><ProductsListView /></React.Suspense></AuthRouteWrapper>}/>
       <Route path={routes.login} element={<React.Suspense fallback={<LazyRouteLoader/>}><LoginView /></React.Suspense>} />
+      <Route path={routes.resetPassword} element={<React.Suspense fallback={<LazyRouteLoader/>}><ForgotPasswordView /></React.Suspense>} />
       <Route path="*" element={<NoMatchView />} />
     </Routes>
   )

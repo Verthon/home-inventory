@@ -1,24 +1,13 @@
-import { useForm,  } from '@mantine/form'
-
 import { Button } from "src/core/Button/Button"
 import { InputField } from "src/core/InputField/InputField"
-import { isEmptyObject } from 'src/utils/collections'
 
 import { useForgotPassword } from './useForgotPassword'
+import { useForgotPasswordForm } from './useForgotPasswordForm'
 
 export const ForgotPasswordContainer = () => {
   const { status, forgotPasswordAction } = useForgotPassword()
-  const form = useForm({
-    initialValues: {
-      email: '',
-    },
-  })
+  const { form, isSubmitDisabled, handleSubmit, handleInputValidation } = useForgotPasswordForm({ forgotPasswordAction })
 
-  const handleSubmit = () => {
-    forgotPasswordAction(form.values.email);
-  }
-
-  const isSubmitDisabled = !form.values.email || !isEmptyObject(form.errors)
   const isLoading = status === 'loading'
 
   if (status === 'success') {
@@ -32,8 +21,8 @@ export const ForgotPasswordContainer = () => {
     <h1>Forgot password</h1>
     <p>Enter your email account to reset  your password</p>
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <InputField name='email' type='email' disabled={isLoading} {...form.getInputProps('email')} />
-      <Button disabled={isSubmitDisabled} loading={isLoading}>Reset Password</Button>
+      <InputField name='email' type='email' placeholder='Type your email' disabled={isLoading} {...form.getInputProps('email')} onBlur={handleInputValidation} />
+      <Button type="submit" disabled={isSubmitDisabled} loading={isLoading}>Reset Password</Button>
     </form>
   </div>
 }
