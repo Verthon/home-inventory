@@ -14,7 +14,8 @@ export const routes: Record<string, AppRoute> = {
   home: "/",
   create: "/create",
   list: "/list",
-  login: "/login"
+  login: "/login",
+  resetPassword: "/reset-password",
 } as const
 
 export const Router = () => {
