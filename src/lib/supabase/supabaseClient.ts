@@ -84,3 +84,13 @@ export const getUser = () => {
 export const onAuthChange = () => {
   return supabaseAuth.onAuthStateChange
 }
+
+export const resetPassword = async (email: string) => {
+  const { data, error } = await supabaseAuth.api.resetPasswordForEmail(email)
+
+  if (error) {
+    throw new Error()
+  }
+
+  return data
+}

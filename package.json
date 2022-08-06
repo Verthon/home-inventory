@@ -1,6 +1,6 @@
 {
   "name": "home-inventory",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "dependencies": {
     "@mantine/core": "^4.2.12",
@@ -78,7 +78,9 @@
       "!src/api/reactQuery/**/*",
       "!src/**/*.types.ts",
       "!src/**/*.stories.tsx",
-      "!src/testUtils.tsx"
+      "!src/testUtils.tsx",
+      "!src/service-worker.ts",
+      "!src/serviceWorkerRegistration.ts"
     ]
   },
   "browserslist": {

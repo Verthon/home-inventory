@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import { server } from "src/setupTests";
 import { FAKE_AUTH_DOMAIN, FAKE_DOMAIN } from "src/testUtils";
-import { addProduct, getBoxes, getProductCategories, getProducts, getUser, login } from "./supabaseClient";
+import { addProduct, getBoxes, getProductCategories, getProducts, getUser, login, resetPassword } from "./supabaseClient";
 
 const genericError = {
   message: "Server error",
@@ -137,5 +137,29 @@ describe("supabaseClient", () => {
   
       expect(user).toEqual(null)
     })
+  })
+
+  describe('reset password', () => {
+    it('should post data and set status correctly', async () => {
+      const data = await resetPassword('my-email@test.pl')
+  
+      expect(data).toEqual({})
+    })
+
+    it("should throw an error in case resetPassword api call fail(required for React Query to handle error properly)", async () => {
+      server.use(
+        rest.post(`${FAKE_AUTH_DOMAIN}/recover`, (_req, res, ctx) => {
+          return res(
+            ctx.status(500),
+            ctx.json({
+              data: null,
+              error: genericError,
+            })
+          );
+        }),
+      );
+  
+      await expect(resetPassword('my-email@test.pl')).rejects.toThrow();
+    });
   })
 });
