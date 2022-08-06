@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from 'src/auth/AuthProvider'
 import { Button } from 'src/core/Button/Button'
 import { InputField } from 'src/core/InputField/InputField'
+import { PasswordInputField } from 'src/core/PasswordInputField/PasswordInputField'
 import { routes } from 'src/router/Router'
 
 import { useLogin } from './useLogin'
@@ -37,11 +38,10 @@ export const LoginContainer = () => {
         {...form.getInputProps('email')}
         onBlur={handleInputValidation}
       />
-      <InputField
+      <PasswordInputField
         name="password"
         label="Password"
         placeholder="your password"
-        type="password"
         required
         disabled={status === 'loading'}
         {...form.getInputProps('password')}
