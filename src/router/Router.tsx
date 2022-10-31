@@ -25,7 +25,7 @@ export const Router = () => {
       <Route path={routes.home} element={<React.Suspense fallback={<LazyRouteLoader/>}><AuthRouteWrapper><HomeView /></AuthRouteWrapper></React.Suspense>}/>
       <Route path={routes.create} element={<AuthRouteWrapper><React.Suspense fallback={<LazyRouteLoader/>}><CreateView /></React.Suspense></AuthRouteWrapper>}/>
       <Route path={routes.list} element={<AuthRouteWrapper><React.Suspense fallback={<LazyRouteLoader/>}><ProductsListView /></React.Suspense></AuthRouteWrapper>}/>
-      <Route path={routes.login} element={<React.Suspense fallback={<LazyRouteLoader/>}><LoginView /></React.Suspense>} />
+      <Route path={routes.login} element={<LoginView />} />
       <Route path={routes.resetPassword} element={<React.Suspense fallback={<LazyRouteLoader/>}><ForgotPasswordView /></React.Suspense>} />
       <Route path="*" element={<NoMatchView />} />
     </Routes>

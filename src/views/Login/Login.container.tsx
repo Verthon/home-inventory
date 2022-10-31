@@ -16,10 +16,13 @@ export const LoginContainer = () => {
   const { user } = useAuth();
   const { form, isSubmitDisabled, handleInputValidation, handleSubmit } = useLoginForm({ login })
 
-  if(user) {
-    navigate(routes.home)
-    return null
-  }
+  React.useEffect(() => {
+    if(user) {
+      navigate(routes.home)
+    }
+  }, [navigate, user])
+
+  
 
 
   return (
