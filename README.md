@@ -9,7 +9,7 @@ Goal: application that allow users to manage the home storage in one application
 The application is [PWA](https://web.dev/progressive-web-apps/) and is developed with [TDD](https://martinfowler.com/bliki/TestDrivenDevelopment.html).
 It comes with automated process for deployment and checks the code quality via Github pipelines (lint, test, build).
 
-* [React with CRA](https://github.com/facebook/create-react-app)
+* [React with RSBuild](https://rsbuild.dev/)
 * [TypeScript](https://www.typescriptlang.org/)
 * [Mantine](https://mantine.dev/getting-started/)
 * [Supabase](https://supabase.com/)
@@ -28,6 +28,7 @@ Next set the environment variables:
 
 ```
 cp .env.example .env.local
+cp .env.local .env.test
 ```
 
 ## Available Scripts
@@ -42,9 +43,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm test:unit`
 
-Launches the test runner in the interactive watch mode.\
+Launches the test runner\
 
 ### `npm run build`
 
@@ -53,7 +54,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can learn more in the [RSBuild documentation](https://rsbuild.dev/guide/start/index).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
