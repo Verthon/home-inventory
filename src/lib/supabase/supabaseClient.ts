@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js'
 import { definitions } from 'src/api/api.types'
 
 const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL || '',
-  process.env.REACT_APP_SUPABASE_ANON_KEY || ''
+  process.env.PUBLIC_SUPABASE_URL || '',
+  process.env.PUBLIC_SUPABASE_ANON_KEY || ''
 )
 
 export type AddProductPayload = Omit<definitions['products'], 'id'>
