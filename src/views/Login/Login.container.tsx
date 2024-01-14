@@ -1,14 +1,29 @@
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { useAuth } from 'src/auth/AuthProvider'
 import { Button } from 'src/core/Button/Button'
 import { InputField } from 'src/core/InputField/InputField'
+import { PasswordInputField } from 'src/core/PasswordInputField/PasswordInputField'
+import { routes } from 'src/router/Router'
 
 import { useLogin } from './useLogin'
 import { useLoginForm } from './useLoginForm'
 
 export const LoginContainer = () => {
+  const navigate = useNavigate()
   const { loginAction: login, status } = useLogin()
+  const { user } = useAuth();
   const { form, isSubmitDisabled, handleInputValidation, handleSubmit } = useLoginForm({ login })
+
+  React.useEffect(() => {
+    if(user) {
+      navigate(routes.home)
+    }
+  }, [navigate, user])
+
+  
+
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -26,11 +41,10 @@ export const LoginContainer = () => {
         {...form.getInputProps('email')}
         onBlur={handleInputValidation}
       />
-      <InputField
+      <PasswordInputField
         name="password"
         label="Password"
         placeholder="your password"
-        type="password"
         required
         disabled={status === 'loading'}
         {...form.getInputProps('password')}

@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js'
 import { definitions } from 'src/api/api.types'
 
 const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL || '',
-  process.env.REACT_APP_SUPABASE_ANON_KEY || ''
+  process.env.PUBLIC_SUPABASE_URL || '',
+  process.env.PUBLIC_SUPABASE_ANON_KEY || ''
 )
 
 export type AddProductPayload = Omit<definitions['products'], 'id'>
@@ -83,4 +83,14 @@ export const getUser = () => {
 
 export const onAuthChange = () => {
   return supabaseAuth.onAuthStateChange
+}
+
+export const resetPassword = async (email: string) => {
+  const { data, error } = await supabaseAuth.api.resetPasswordForEmail(email)
+
+  if (error) {
+    throw new Error()
+  }
+
+  return data
 }

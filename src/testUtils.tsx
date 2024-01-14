@@ -31,6 +31,9 @@ export const handlers = [
   rest.post(`${FAKE_AUTH_DOMAIN}/token`, (_req, res, ctx) => {
     return res(ctx.status(201), ctx.json({}))
   }),
+  rest.post(`${FAKE_AUTH_DOMAIN}/recover`, (_req, res, ctx) => {
+    return res(ctx.status(201), ctx.json({}))
+  })
 ]
 
 const createTestQueryClient = () =>
