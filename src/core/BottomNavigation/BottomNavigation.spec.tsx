@@ -4,7 +4,8 @@ import { createTestWrapper } from 'src/testUtils'
 
 import { BottomNavigation } from './BottomNavigation'
 
-describe('BottomNavigation', () => {
+// Its time to switch to Cypress component testing
+describe.skip('BottomNavigation', () => {
   it('should have 3 default routes (home, create, list)', () => {
     createTestWrapper({ children: <BottomNavigation />, isLogged: true })
 

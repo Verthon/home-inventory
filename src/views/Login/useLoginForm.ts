@@ -15,7 +15,7 @@ export const useLoginForm = ({ login }: useLoginFormProps) => {
       .min(8, { message: 'Please enter valid password (minimum 8 chars)' }),
   })
   const form = useForm<LoginFormValues>({
-    schema: zodResolver(schema),
+    validate: zodResolver(schema),
     initialValues: {
       email: '',
       password: '',

@@ -1,33 +1,33 @@
+import * as React from 'react'
+import { createRoot } from 'react-dom/client'
 import { MantineProvider } from '@mantine/core'
-import { NotificationsProvider } from '@mantine/notifications'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { Notifications } from '@mantine/notifications'
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
+import '@mantine/dates/styles.css'
 
 import { ReactQueryProvider } from './api/reactQuery/ReactQueryProvider'
 import { AuthProvider } from './auth/AuthProvider'
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import './index.css'
 
 import reportWebVitals from './reportWebVitals'
 import { Router } from './router/Router'
 import { RouterProvider } from './router/RouterProvider'
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+const root = createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <MantineProvider>
-      <NotificationsProvider>
-        <ReactQueryProvider>
-          <AuthProvider>
-            <RouterProvider>
-              <Router />
-            </RouterProvider>
-          </AuthProvider>
-        </ReactQueryProvider>
-      </NotificationsProvider>
+      <Notifications />
+      <ReactQueryProvider>
+        <AuthProvider>
+          <RouterProvider>
+            <Router />
+          </RouterProvider>
+        </AuthProvider>
+      </ReactQueryProvider>
     </MantineProvider>
   </React.StrictMode>
 )
 
-serviceWorkerRegistration.register();
 reportWebVitals()

@@ -1,18 +1,20 @@
-import { useForm, zodResolver } from "@mantine/form";
-import { z } from "zod";
+import { useForm, zodResolver } from '@mantine/form'
+import { z } from 'zod'
 
-import { isEmptyObject } from "src/utils/collections";
+import { isEmptyObject } from 'src/utils/collections'
 
-import type { useForgotPasswordFormProps } from "./ForgotPassword.types";
+import type { useForgotPasswordFormProps } from './ForgotPassword.types'
 
-export const useForgotPasswordForm = ({ forgotPasswordAction }: useForgotPasswordFormProps) => {
+export const useForgotPasswordForm = ({
+  forgotPasswordAction,
+}: useForgotPasswordFormProps) => {
   const schema = z.object({
     email: z
       .string()
       .email({ message: 'Please add correct email format (email@test.pl)' }),
   })
   const form = useForm({
-    schema: zodResolver(schema),
+    validate: zodResolver(schema),
     initialValues: {
       email: '',
     },
@@ -20,8 +22,8 @@ export const useForgotPasswordForm = ({ forgotPasswordAction }: useForgotPasswor
 
   const handleSubmit = () => {
     form.validateField('email')
-    if(isEmptyObject(form.errors) && form.values.email) {
-      forgotPasswordAction(form.values.email);
+    if (isEmptyObject(form.errors) && form.values.email) {
+      forgotPasswordAction(form.values.email)
     }
   }
 
