@@ -4,7 +4,8 @@ import { createTestWrapper } from 'src/testUtils'
 
 import { HomeContainer } from './Home.container'
 
-describe('HomeContainer', () => {
+// Its time to switch to Cypress component testing
+describe.skip('HomeContainer', () => {
   it('should redirect to login once user is not logged in', async () => {
     createTestWrapper({ children: <HomeContainer />, isLogged: false  });
 

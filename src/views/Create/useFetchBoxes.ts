@@ -6,7 +6,7 @@ export const useFetchBoxes = () => {
 
   const boxesList = Array.isArray(data) ? data.map((box) => {
     return {
-      label: box.box_name,
+      label: box.box_name ?? '',
       value: String(box.id)
     }
   }) : []

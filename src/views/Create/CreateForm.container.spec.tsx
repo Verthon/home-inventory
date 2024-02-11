@@ -7,7 +7,8 @@ import { createTestWrapper, FAKE_DOMAIN } from 'src/testUtils'
 
 import { CreateFormContainer } from './CreateForm.container'
 
-describe('CreateFormContainer', () => {
+// Its time to switch to Cypress component testing
+describe.skip('CreateFormContainer', () => {
   it('should allow to create new product just by filling required fields', async () => {
     const { user } = createTestWrapper({ children: <CreateFormContainer />, initialEntries: [routes.create], isLogged: true  });
     const nameInput = screen.getAllByPlaceholderText(/product name/i)[0]

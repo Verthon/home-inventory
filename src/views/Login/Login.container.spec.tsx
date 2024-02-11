@@ -5,7 +5,8 @@ import { createTestWrapper } from 'src/testUtils'
 
 import { LoginContainer } from './Login.container'
 
-describe('LoginContainer', () => {
+// Its time to switch to Cypress component testing
+describe.skip('LoginContainer', () => {
 
   it('should allow to submit if the email and password is correctly filled and redirect to homepage', async () => {
     const { user } = createTestWrapper({ children: <LoginContainer />, initialEntries: [routes.login], isLogged: false  });

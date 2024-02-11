@@ -10,8 +10,5 @@ module.exports = {
     "@storybook/preset-create-react-app",
     "@storybook/addon-a11y"
   ],
-  "framework": "@storybook/react",
-  "core": {
-    "builder": "@storybook/builder-webpack5"
-  }
+  "framework": "storybook-react-rspack",
 }

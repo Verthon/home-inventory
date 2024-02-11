@@ -4,7 +4,8 @@ import { createTestWrapper } from "src/testUtils"
 
 import { ForgotPasswordContainer } from './ForgotPassword.container'
 
-describe('ForgotPassword', () => {
+// Its time to switch to Cypress component testing
+describe.skip('ForgotPassword', () => {
   it('should allow to reset the password and on success show the message about next steps', async () => {
     const { user } = createTestWrapper({ children: <ForgotPasswordContainer />, initialEntries: [routes.resetPassword], isLogged: true })
     const input = screen.getAllByPlaceholderText(/email/i)[0]

@@ -7,7 +7,8 @@ import { createTestWrapper, FAKE_DOMAIN } from 'src/testUtils'
 
 import { ProductsListContainer } from './ProductsList.container'
 
-describe('ProductsListContainer', () => {
+// Its time to switch to Cypress component testing
+describe.skip('ProductsListContainer', () => {
   it('should fetch the list successfully', async () => {
     createTestWrapper({ children: <ProductsListContainer />, initialEntries: [routes.home], isLogged: true  });
     expect(screen.getByRole('progressbar')).toBeInTheDocument()

@@ -3,6 +3,8 @@ import { rest } from 'msw'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { MemoryRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
+import { MantineProvider } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 
 import { boxesList } from './fixtures/boxes/boxes'
 import { categoriesList } from './fixtures/categories/categories'
@@ -33,7 +35,7 @@ export const handlers = [
   }),
   rest.post(`${FAKE_AUTH_DOMAIN}/recover`, (_req, res, ctx) => {
     return res(ctx.status(201), ctx.json({}))
-  })
+  }),
 ]
 
 const createTestQueryClient = () =>
@@ -76,8 +78,11 @@ export const createTestWrapper = ({
     <QueryClientProvider client={testQueryClient}>
       <MemoryRouter initialEntries={initialEntries}>
         <AuthProvider user={currentUser}>
-          <Router />
-          {children}
+          <MantineProvider>
+            <Router />
+            <Notifications />
+            {children}
+          </MantineProvider>
         </AuthProvider>
       </MemoryRouter>
     </QueryClientProvider>

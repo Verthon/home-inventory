@@ -15,8 +15,48 @@ setLogger({
   error: () => {},
 })
 
+const { getComputedStyle } = window
+window.getComputedStyle = (elt) => getComputedStyle(elt)
+
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+window.ResizeObserver = ResizeObserver
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+})
+
 // Establish API mocking before all tests.
-beforeAll(() => server.listen())
+beforeAll(() => {
+  // Object.defineProperty(window, 'matchMedia', {
+  //   writable: true,
+  //   value: jest.fn().mockImplementation((query) => ({
+  //     matches: false,
+  //     media: query,
+  //     onchange: null,
+  //     addListener: jest.fn(),
+  //     removeListener: jest.fn(),
+  //     addEventListener: jest.fn(),
+  //     removeEventListener: jest.fn(),
+  //     dispatchEvent: jest.fn(),
+  //   })),
+  // })
+
+  server.listen()
+})
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
 afterEach(() => server.resetHandlers())

@@ -1,41 +1,49 @@
-import * as React from "react";
-import { useForm, zodResolver } from "@mantine/form";
-import dayjs from "dayjs";
-import { z } from 'zod';
+import * as React from 'react'
+import { useForm, zodResolver } from '@mantine/form'
+import dayjs from 'dayjs'
+import { z } from 'zod'
 
-import type { AddProductPayload } from "src/lib/supabase/supabaseClient";
-import { Button } from "src/core/Button/Button";
-import { DatePicker } from "src/core/DatePicker/DatePicker";
-import { InputField } from "src/core/InputField/InputField";
-import { NumberInputField } from "src/core/NumberInputField/NumberInputField";
-import { Select } from "src/core/Select/Select";
+import type { AddProductPayload } from 'src/lib/supabase/supabaseClient'
+import { Button } from 'src/core/Button/Button'
+import { DatePicker } from 'src/core/DatePicker/DatePicker'
+import { InputField } from 'src/core/InputField/InputField'
+import { NumberInputField } from 'src/core/NumberInputField/NumberInputField'
+import { Select } from 'src/core/Select/Select'
 
-import { useFetchBoxes } from "./useFetchBoxes";
-import { useFetchCategories } from "./useFetchCategories";
-import type { CreateFormValues } from "./CreateForm.types";
-import { useCreateProduct } from "./useCreateProduct";
+import { useFetchBoxes } from './useFetchBoxes'
+import { useFetchCategories } from './useFetchCategories'
+import type { CreateFormValues } from './CreateForm.types'
+import { useCreateProduct } from './useCreateProduct'
 
 export const CreateFormContainer = () => {
-  const { status: categoriesStatus, categoriesList } = useFetchCategories();
-  const { status: boxesStatus, boxesList } = useFetchBoxes();
+  const { status: categoriesStatus, categoriesList } = useFetchCategories()
+  const { status: boxesStatus, boxesList } = useFetchBoxes()
   const { status: createProductStatus, mutate: createProduct } =
-    useCreateProduct();
+    useCreateProduct()
   const schema = z.object({
-    productName: z.string().min(2, { message: 'Name should have at least 2 letters' }),
-    shortDescription: z.string().min(15, { message: 'Short description should have at lease 15 letters' }).max(250, { message: 'Max 250 characters is supported for description' }),
-    quantity: z.number().min(1, { message: 'You have to add at least one product' }).max(100, { message: 'Max 100 products is supported for one product' }),
-  });
+    productName: z
+      .string()
+      .min(2, { message: 'Name should have at least 2 letters' }),
+    shortDescription: z
+      .string()
+      .min(15, { message: 'Short description should have at lease 15 letters' })
+      .max(250, { message: 'Max 250 characters is supported for description' }),
+    quantity: z
+      .number()
+      .min(1, { message: 'You have to add at least one product' })
+      .max(100, { message: 'Max 100 products is supported for one product' }),
+  })
   const form = useForm<CreateFormValues>({
-    schema: zodResolver(schema),
     initialValues: {
-      productName: "",
-      shortDescription: "",
-      quantity: "",
-      category: "",
-      boxName: "",
+      productName: '',
+      shortDescription: '',
+      quantity: '',
+      category: '',
+      boxName: '',
       expiryDate: new Date(),
     },
-  });
+    validate: zodResolver(schema),
+  })
 
   const getCreateProductPayload = (
     values: CreateFormValues
@@ -46,20 +54,23 @@ export const CreateFormContainer = () => {
       quantity: Number(values.quantity),
       category_id: Number(values.category),
       box_id: Number(values.boxName),
-      expiry_date: dayjs(values.expiryDate).format("yyyy-mm-dd"),
-    };
-  };
+      expiry_date: dayjs(values.expiryDate).format('yyyy-mm-dd'),
+    }
+  }
 
   const handleSubmit = (values: CreateFormValues) => {
-    const formattedPayload = getCreateProductPayload(values);
-    createProduct(formattedPayload);
-  };
+    const formattedPayload = getCreateProductPayload(values)
+    createProduct(formattedPayload)
+  }
 
   const isProductSubmitting = createProductStatus === 'loading'
   const isBoxSelectDisabled = isProductSubmitting || boxesStatus === 'loading'
-  const isCategorySelectDisabled = isProductSubmitting || categoriesStatus === 'loading'
+  const isCategorySelectDisabled =
+    isProductSubmitting || categoriesStatus === 'loading'
 
-  const handleInputValidation = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+  const handleInputValidation = (
+    e: React.FocusEvent<HTMLInputElement, Element>
+  ) => {
     const inputName = e.target.name
     form.validateField(inputName)
   }
@@ -70,18 +81,21 @@ export const CreateFormContainer = () => {
     !form.values.shortDescription ||
     !form.values.category ||
     !form.values.boxName ||
-    !form.values.expiryDate;
+    !form.values.expiryDate
 
   return (
     <div>
       <p>Create a new product, all fields are mandatory</p>
-      <form aria-label="form" onSubmit={form.onSubmit(handleSubmit)}>
+      <form
+        aria-label="form"
+        onSubmit={form.onSubmit(handleSubmit)}
+      >
         <InputField
           label="Product name"
           name="productName"
           type="text"
           placeholder="Product name"
-          {...form.getInputProps("productName")}
+          {...form.getInputProps('productName')}
           disabled={isProductSubmitting}
           required
           onBlur={handleInputValidation}
@@ -92,7 +106,7 @@ export const CreateFormContainer = () => {
           name="shortDescription"
           placeholder="Short description"
           disabled={isProductSubmitting}
-          {...form.getInputProps("shortDescription")}
+          {...form.getInputProps('shortDescription')}
           required
           onBlur={handleInputValidation}
         />
@@ -100,7 +114,7 @@ export const CreateFormContainer = () => {
           label="Product quantity"
           placeholder="Quantity"
           name="quantity"
-          {...form.getInputProps("quantity")}
+          {...form.getInputProps('quantity')}
           disabled={isProductSubmitting}
           required
           onBlur={handleInputValidation}
@@ -110,7 +124,7 @@ export const CreateFormContainer = () => {
           name="category"
           placeholder="Select category"
           data={categoriesList}
-          {...form.getInputProps("category")}
+          {...form.getInputProps('category')}
           disabled={isCategorySelectDisabled}
           required
         />
@@ -119,16 +133,16 @@ export const CreateFormContainer = () => {
           name="boxName"
           placeholder="Select box name"
           data={boxesList}
-          {...form.getInputProps("boxName")}
+          {...form.getInputProps('boxName')}
           disabled={isBoxSelectDisabled}
           required
         />
         <DatePicker
           label="Expiry date"
           name="expiryDate"
-          type="text"
+          type='default'
           placeholder="Expiry date"
-          {...form.getInputProps("expiryDate")}
+          {...form.getInputProps('expiryDate')}
           disabled={isProductSubmitting}
           minDate={dayjs().toDate()}
           required
@@ -143,5 +157,5 @@ export const CreateFormContainer = () => {
         </Button>
       </form>
     </div>
-  );
-};
+  )
+}

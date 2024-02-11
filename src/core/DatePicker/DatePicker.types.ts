@@ -1,3 +1,6 @@
-import { DatePickerProps as MDatePickerProps } from "@mantine/dates";
+import { DatePickerInputProps as MDatePickerProps } from '@mantine/dates'
 
-export type DatePickerProps = MDatePickerProps
+export type DatePickerProps = {
+  disabled?: boolean
+  required?: boolean
+} & MDatePickerProps

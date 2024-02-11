@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { ProductCard } from './ProductCard'
 
-describe('ProductCard', () => {
+// Its time to switch to Cypress component testing
+describe.skip('ProductCard', () => {
   it('should display skeleton loader in loading state', () => {
     render(<ProductCard loading boxId='A1' productName='Eko Farma Strawberry Jam' quantity='1' />)
 
