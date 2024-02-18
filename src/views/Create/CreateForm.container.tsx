@@ -124,6 +124,7 @@ export const CreateFormContainer = () => {
           name="category"
           placeholder="Select category"
           data={categoriesList}
+          aria-label='productCategory'
           {...form.getInputProps('category')}
           disabled={isCategorySelectDisabled}
           required
@@ -133,6 +134,7 @@ export const CreateFormContainer = () => {
           name="boxName"
           placeholder="Select box name"
           data={boxesList}
+          aria-label='productBox'
           {...form.getInputProps('boxName')}
           disabled={isBoxSelectDisabled}
           required
@@ -142,6 +144,7 @@ export const CreateFormContainer = () => {
           name="expiryDate"
           type='default'
           placeholder="Expiry date"
+          aria-label='expiryDate'
           {...form.getInputProps('expiryDate')}
           disabled={isProductSubmitting}
           minDate={dayjs().toDate()}

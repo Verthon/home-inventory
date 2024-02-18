@@ -1,11 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,8 +17,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
+    "types": ["cypress", "node"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src", "cypress"]
 }

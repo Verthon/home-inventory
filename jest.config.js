@@ -1,4 +1,30 @@
-/** @type {import('@jest/types').Config.InitialOptions} */
+
+// module.exports = (path, options) => {
+//   // Jest + jsdom acts like a browser (i.e., it looks for "browser" imports
+//   // under pkg.exports), but msw knows that you're operating in a Node
+//   // environment:
+//   //
+//   // https://github.com/mswjs/msw/issues/1786#issuecomment-1782559851
+//   //
+//   // The MSW project's recommended workaround is to disable Jest's
+//   // customExportConditions completely, so no packages use their browser's
+//   // versions.  We'll instead clear export conditions only for MSW.
+//   if (/^(msw|@mswjs\/interceptors)(\/|$)/.test(path)) {
+//     return options.defaultResolver(path, {
+//       ...options,
+//       conditions: options.conditions.filter(
+//         (condition) => condition !== 'browser'
+//       ),
+//     })
+//   }
+
+//   const customOptions = {
+
+//   }
+
+//   return options.defaultResolver(path, options)
+// }
+/** @type {import('@jest').Config.InitialOptions} */
 module.exports = {
   transform: {
     '^.+\\.(t|j)sx?$': [
@@ -30,6 +56,7 @@ module.exports = {
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|less)$': 'identity-obj-proxy',
   },
+  testMatch: ['<rootDir>/src/**/*.spec.{js,jsx,ts,tsx}'],
   testEnvironment: 'jsdom',
   collectCoverageFrom: [
     'src/**/*.(ts|tsx)',

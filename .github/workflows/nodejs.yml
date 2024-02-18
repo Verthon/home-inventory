@@ -21,10 +21,17 @@ jobs:
         run: npm ci
       - name: Run linter
         run: npm run lint  
-      - name: Run unit and integration tests
+      - name: Run unit tests
         env:
           PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+          PUBLIC_API_MOCK: false
         run: npm run test:ci
+      - name: Run e2e tests
+        env:
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+          PUBLIC_API_MOCK: false
+        run: npm run test:e2e
       - name: Run build
         run: npm run build

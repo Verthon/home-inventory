@@ -1,12 +1,16 @@
 import { createClient } from '@supabase/supabase-js'
-import { definitions } from 'src/api/api.types'
+import { Tables } from 'src/api/api.types'
+import { user } from 'src/fixtures/auth/user'
 
 const supabase = createClient(
   process.env.PUBLIC_SUPABASE_URL || '',
   process.env.PUBLIC_SUPABASE_ANON_KEY || ''
 )
 
-export type AddProductPayload = Omit<definitions['products'], 'id'>
+export type AddProductPayload = Omit<
+  Tables<'products'>,
+  'id' | 'created_at' | 'edited_at' | 'long_description'
+>
 export type LoginPayload = {
   email: string
   password: string
@@ -15,9 +19,17 @@ export type LoginPayload = {
 export const supabaseAuth = supabase.auth
 
 export const getProducts = async () => {
-  const { data, error } = await supabase
-    .from<definitions['products']>('products')
-    .select('*')
+  const { data, error } = await supabase.from<Tables<'products'>>('products')
+    .select(`
+    id,
+    expiry_date,
+    name,
+    short_description,
+    long_description,
+    quantity,
+    boxes (id, box_name),
+    categories (id, name)
+  `)
 
   if (error) {
     throw new Error()
@@ -28,7 +40,7 @@ export const getProducts = async () => {
 
 export const getProductCategories = async () => {
   const { data, error } = await supabase
-    .from<definitions['categories']>('categories')
+    .from<Tables<'categories'>>('categories')
     .select('*')
 
   if (error) {
@@ -40,7 +52,7 @@ export const getProductCategories = async () => {
 
 export const getBoxes = async () => {
   const { data, error } = await supabase
-    .from<definitions['boxes']>('boxes')
+    .from<Tables<'boxes'>>('boxes')
     .select('*')
 
   if (error) {
@@ -76,9 +88,10 @@ export const login = async (credentials: LoginPayload) => {
 }
 
 export const getUser = () => {
-  const user = supabaseAuth.user()
+  if (process.env.NODE_ENV === 'development') return user
+  const currentUser = supabaseAuth.user()
 
-  return user
+  return currentUser
 }
 
 export const onAuthChange = () => {

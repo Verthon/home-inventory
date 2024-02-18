@@ -1,7 +1,7 @@
 import type { QueryStatus } from "react-query"
 
 export type DisplayProduct = {
-  boxId: string
+  boxName: string
   productName: string
   quantity: string
   quantityStatus?: string
