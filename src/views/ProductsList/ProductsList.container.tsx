@@ -7,13 +7,29 @@ import { ProductsList } from './ProductsList'
 import { useFetchProducts } from './useFetchProducts'
 
 export const ProductsListContainer = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { status, productsList, refetch } = useFetchProducts()
   const redirectToCreatePage = () => navigate(routes.create)
 
-  if(status === 'loading') {
-    return <Skeleton><ProductsList status={status} productsList={productsList} refetch={refetch} redirectToCreate={redirectToCreatePage} /></Skeleton>
+  if (status === 'loading') {
+    return (
+      <Skeleton>
+        <ProductsList
+          status={status}
+          productsList={productsList}
+          refetch={refetch}
+          redirectToCreate={redirectToCreatePage}
+        />
+      </Skeleton>
+    )
   }
 
-  return <ProductsList status={status} productsList={productsList} refetch={refetch} redirectToCreate={redirectToCreatePage} />
+  return (
+    <ProductsList
+      status={status}
+      productsList={productsList}
+      refetch={refetch}
+      redirectToCreate={redirectToCreatePage}
+    />
+  )
 }

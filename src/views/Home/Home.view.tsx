@@ -5,7 +5,7 @@ import { HomeContainer } from './Home.container'
 const HomeView = () => {
   return (
     <AppShell>
-      <h1>Home</h1>
+      <h1>Welcome</h1>
       <HomeContainer />
     </AppShell>
   )

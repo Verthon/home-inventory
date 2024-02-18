@@ -5,7 +5,7 @@ import type { ProductCardProps } from "./ProductCard.types";
 import styles from "./ProductCard.module.css";
 
 const Content = ({
-  boxId,
+  boxName,
   productName,
   quantity,
   quantityStatus,
@@ -19,7 +19,7 @@ const Content = ({
       <Avatar className={styles.avatar} size="sm">AV</Avatar>
       <div className={styles.productNameWrapper}>
         <p className={styles.productName}>
-          <span className={styles.productBoxName}>{boxId}</span> {productName}
+          <span className={styles.productBoxName}>{boxName}</span> {productName}
         </p>
         <p className={styles.quantityStatus}>{quantityStatus}</p>
       </div>
@@ -29,7 +29,7 @@ const Content = ({
 }
 
 export const ProductCard = ({
-  boxId,
+  boxName,
   productName,
   quantity,
   loading,
@@ -38,11 +38,11 @@ export const ProductCard = ({
 
   if (loading) {
     return <Skeleton animate>
-      <Content boxId={boxId} productName={productName} quantity={quantity} quantityStatus={quantityStatus} />
+      <Content boxName={boxName} productName={productName} quantity={quantity} quantityStatus={quantityStatus} />
     </Skeleton>;
   }
 
   return (
-    <Content boxId={boxId} productName={productName} quantity={quantity} quantityStatus={quantityStatus} />
+    <Content boxName={boxName} productName={productName} quantity={quantity} quantityStatus={quantityStatus} />
   );
 };

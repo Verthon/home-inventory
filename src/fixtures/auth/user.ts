@@ -1,0 +1,32 @@
+export const user = {
+  id: '6f0a3ad7-a440-4aa1-935c-e9ed33f0d4cf',
+  aud: 'authenticated',
+  role: 'authenticated',
+  email: 'jurrprog@gmail.com',
+  email_confirmed_at: '2022-08-03T05:19:58.477182Z',
+  phone: '',
+  confirmation_sent_at: '2022-08-03T05:17:52.651021Z',
+  confirmed_at: '2022-08-03T05:19:58.477182Z',
+  recovery_sent_at: '2022-08-06T07:16:28.698716Z',
+  last_sign_in_at: '2024-02-11T10:56:38.674283548Z',
+  app_metadata: { provider: 'email', providers: ['email'] },
+  user_metadata: {},
+  identities: [
+    {
+      identity_id: '64719890-7401-437f-b954-3b93deade628',
+      id: '6f0a3ad7-a440-4aa1-935c-e9ed33f0d4cf',
+      user_id: '6f0a3ad7-a440-4aa1-935c-e9ed33f0d4cf',
+      identity_data: {
+        email: 'jurrprog@gmail.com',
+        sub: '6f0a3ad7-a440-4aa1-935c-e9ed33f0d4cf',
+      },
+      provider: 'email',
+      last_sign_in_at: '2022-08-03T05:17:52.646839Z',
+      created_at: '2022-08-03T05:17:52.646885Z',
+      updated_at: '2022-11-25T00:00:00Z',
+      email: 'jurrprog@gmail.com',
+    },
+  ],
+  created_at: '2022-08-03T05:17:52.641364Z',
+  updated_at: '2024-02-11T10:56:38.67741Z',
+}
